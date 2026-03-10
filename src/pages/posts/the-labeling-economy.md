@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Post.astro
-title: "The Labeling Economy"
+title: "Post 1"
 subtitle: "Inside the shadow workforce that makes AI actually work."
 date: 2026-03-01
 tag: AI Infrastructure
