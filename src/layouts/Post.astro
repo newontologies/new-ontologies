@@ -36,15 +36,5 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
       bar.style.height = progress + '%';
     });
 
-    // Scroll fade-in for prose elements
-    const targets = document.querySelectorAll('.prose p, .prose h2, .prose h3, .prose blockquote');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-    targets.forEach(el => observer.observe(el));
   </script>
 </Base>
