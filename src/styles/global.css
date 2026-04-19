@@ -75,7 +75,7 @@
 }
 
 html {
-  font-size: 19px;
+  font-size: 17px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -84,7 +84,7 @@ body {
   font-family: var(--font-body);
   color: var(--gray-900);
   background: var(--bg);
-  line-height: 1.65;
+  line-height: 1.75;
   transition: background 0.3s, color 0.3s;
 }
 
@@ -239,10 +239,10 @@ body {
   display: block;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   color: var(--black);
   max-width: 900px;
   white-space: nowrap;
@@ -505,21 +505,21 @@ main {
 }
 
 .post-header-tag {
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: 0.6rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--accent);
   margin-bottom: 1rem;
 }
 
 .post-header h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  font-size: clamp(1.9rem, 3.5vw, 2.4rem);
   font-weight: 500;
   color: var(--black);
-  letter-spacing: -0.03em;
-  line-height: 1.08;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
 }
 
 .post-header-meta {
@@ -545,10 +545,10 @@ main {
 
 .prose {
   font-family: 'Literata', Georgia, serif;
-  font-size: 1.08rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.8;
   color: var(--black);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.003em;
 }
 
 .prose h2 {
