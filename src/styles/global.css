@@ -753,8 +753,10 @@ main {
   .feat-body { grid-template-columns: 1fr; gap: 0.2rem; }
   .feat-meta { order: -1; }
 
-  .thumb-item { grid-template-columns: 72px 1fr; gap: 0.85rem; }
+  .thumb-item { grid-template-columns: 72px 1fr; gap: 0.85rem; align-items: center; }
   .thumb-meta { display: none; }
+  .thumb-img { height: 72px; }
+  .post-tag { font-size: 0.58rem; padding: 0.1em 0.4em; border: none; color: var(--accent); }
 
   .container {
     padding: 0 1.25rem;
