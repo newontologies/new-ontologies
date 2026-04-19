@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title = 'New Ontologies', description = 'Original research on companies.' } = Astro.props;
+const { title = 'New Ontologies', description = 'Original research on technology, culture, and the systems that shape how we build, work, and see.' } = Astro.props;
 const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontologies`;
 ---
 <!DOCTYPE html>
@@ -20,13 +20,14 @@ const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontolog
 </head>
 <body>
   <header class="site-header">
-    <div class="site-header-inner">
-      <a href="/" class="site-logo">New Ontologies</a>
-      <nav class="site-nav">
-        <a href="/">Archive</a>
-        <a href="/about">About</a>
-      </nav>
-    </div>
+    <a href="/" class="site-logo">New Ontologies</a>
+    <nav class="site-nav">
+      <a href="/archive">Archive</a>
+      <a href="/about">About</a>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-toggle-icon"></span>
+      </button>
+    </nav>
   </header>
 
   <main>
@@ -36,8 +37,21 @@ const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontolog
   <footer class="site-footer">
     <div class="site-footer-inner">
       <span>&copy; {new Date().getFullYear()} New Ontologies</span>
-      <a href="https://yourusername.substack.com" target="_blank" rel="noopener">Substack</a>
+      <a href="/about">About</a>
     </div>
   </footer>
+
+  <script>
+    const html = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+    toggle?.addEventListener('click', () => {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+  </script>
 </body>
 </html>

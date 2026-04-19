@@ -10,6 +10,7 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
 });
 ---
 <Base title={frontmatter.title} description={frontmatter.subtitle || frontmatter.title}>
+  <div class="progress-bar" id="progressBar"></div>
   <div class="container">
     <article>
       <header class="post-header">
@@ -23,4 +24,27 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
       </div>
     </article>
   </div>
+
+  <script>
+    // Vertical progress bar
+    window.addEventListener('scroll', () => {
+      const bar = document.getElementById('progressBar');
+      if (!bar) return;
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.height = progress + '%';
+    });
+
+    // Scroll fade-in for prose elements
+    const targets = document.querySelectorAll('.prose p, .prose h2, .prose h3, .prose blockquote');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    targets.forEach(el => observer.observe(el));
+  </script>
 </Base>
