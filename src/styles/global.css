@@ -41,7 +41,7 @@
   --bg-code: var(--cream-light);
   --border-color: var(--gray-300);
 
-  --max-width: 680px;
+  --max-width: 760px;
   --max-width-wide: 1000px;
 }
 
@@ -91,7 +91,7 @@ body {
 /* === NAV === */
 
 .site-header {
-  max-width: 780px;
+  max-width: 860px;
   margin: 0 auto;
   padding: 1.25rem 3rem;
   display: flex;
@@ -228,7 +228,7 @@ body {
 /* === ABOUT (style B — centered question) === */
 
 .about-c {
-  max-width: 780px;
+  max-width: 860px;
   margin: 0 auto;
   padding: 3rem 2.5rem 2.5rem;
   border-bottom: none;
@@ -244,7 +244,7 @@ body {
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--black);
-  max-width: 680px;
+  max-width: 760px;
   white-space: nowrap;
   margin: 0 auto 0.75rem;
 }
@@ -412,7 +412,7 @@ body {
 /* === LAYOUT === */
 
 main {
-  max-width: 780px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -686,7 +686,7 @@ main {
 }
 
 .site-footer-inner {
-  max-width: 780px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
