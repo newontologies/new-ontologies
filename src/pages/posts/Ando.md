@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: "Ando: AI-Native Slack"
 subtitle: "Building work messaging from scratch"
-date: 2026-04-19
+date: 2026-04-21
 tag: company building, future of work
 image: /images/andoposter2.png
 ---
@@ -107,7 +107,7 @@ Individual message retrieval failed early on. Oliver, a product contributor at A
 
 They compare it to Borges's Library of Babel — a universe containing every possible book, most of them gibberish, where accurate search is lossy and futile. The presence of a taxonomy or library catalog helps an agent find its way through.
 
-## The bpm of human conversation, and language as product
+## The bpm of human conversation
 
 Most of us spend more waking hours inside a messaging platform than inside any single room. The same way architecture shapes how we live, software shapes how we work and derive meaning. It is fitting that Ando is an homage to the Japanese architect Tadao Ando, whose work emerged from the urban fabric of post-war Osaka, known for his mastery of Ma, the Japanese concept of empty, negative space. In an interview, he stated his aim of architecture as “convert feelings into physical form.”
 
@@ -132,6 +132,7 @@ It is clear to me that their competitive advantage is how much fun they are havi
 Sara knows it is still early. "It’s humbling to study architects' careers, because you usually don’t get any recognition during the decades you're building it.” She tells me as we walk around the  Transamerica Pyramid. “People are annoyed by the construction and the scaffolding. But then when it’s done they post it all over Instagram and forget the journey there.”
 But I don’t doubt she’ll keep building anyway. Even when the work ahead is long and the scaffolding is ugly, she holds the image of the monument in her mind.
 
+## contact
 If you liked this piece and recognized yourself in it, Ando is hiring. Alpha customers are intensely using the product. DM Sara on [here](https://x.com/saradu) or [here](https://www.linkedin.com/in/saradu/) and let her know you’re coming from this piece.
 
 I write independent field studies of ambitious early stage companies from a product-centric, deeply personal lens. If you want to chat, you can find me [here](https://x.com/startingfromnix) or email me [here](startingfromnix@gmail.com). 

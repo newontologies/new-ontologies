@@ -554,23 +554,27 @@ main {
 
 .prose h2 {
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: 2.1rem;
   font-weight: 500;
   color: var(--black);
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
+  border-bottom: 2px solid var(--accent-light);
+  padding-bottom: 0.3rem;
 }
 
 .prose h3 {
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--black);
   margin-top: 2rem;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  border-bottom: 1.5px solid var(--accent-light);
+  padding-bottom: 0.25rem;
 }
 
 .prose p {
@@ -797,7 +801,7 @@ main {
   }
 
   .prose h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   .prose > p:first-of-type::first-letter {
