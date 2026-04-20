@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Type Scale Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400;1,7..72,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter Tight', sans-serif; background: #f5f0e8; color: #1C1410; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; gap: 1rem; padding: 0.75rem 2rem;
+      background: #1C1410; color: #f5f0e8;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .nav a { color: #8CB4D2; text-decoration: none; padding: 0.3em 0.7em; border-radius: 3px; }
+    .nav a:hover, .nav a.active { background: #6A9BC0; color: white; }
+    .nav span { color: #888; margin-right: 0.5rem; }
+
+    .options { display: flex; }
+    .option {
+      flex: 1; padding: 3rem 2.5rem; border-right: 1px solid #D8D0C4;
+      min-height: 100vh;
+    }
+    .option:last-child { border-right: none; }
+
+    .label {
+      display: inline-block; margin-bottom: 2rem;
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #6A9BC0;
+      background: #E8EFF4; padding: 0.3em 0.7em; border-radius: 2px;
+    }
+
+    /* OPTION A — 17px (current — too small) */
+    .a { font-size: 17px; line-height: 1.75; }
+    .a .tag { font-size: calc(0.6rem * 17/17); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #6A9BC0; margin-bottom: 0.75rem; }
+    .a h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.9rem, 3.5vw, 2.4rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.1; color: #1C1410; }
+    .a .sub { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1rem; color: #4A3828; margin-top: 0.75rem; }
+    .a .date { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #7A6858; margin-top: 1rem; }
+    .a .prose { font-family: 'Literata', serif; font-size: 1.05rem; line-height: 1.8; color: #1C1410; margin-top: 2rem; }
+    .a .prose p { margin-bottom: 1.3rem; }
+    .a .prose h2 { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 500; margin: 2rem 0 0.75rem; letter-spacing: -0.02em; }
+
+    /* OPTION B — 18px */
+    .b { font-size: 18px; line-height: 1.75; }
+    .b .tag { font-size: calc(0.6rem * 18/17); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #6A9BC0; margin-bottom: 0.75rem; }
+    .b h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 3.5vw, 2.6rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.1; color: #1C1410; }
+    .b .sub { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.1rem; color: #4A3828; margin-top: 0.75rem; }
+    .b .date { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #7A6858; margin-top: 1rem; }
+    .b .prose { font-family: 'Literata', serif; font-size: 1.07rem; line-height: 1.8; color: #1C1410; margin-top: 2rem; }
+    .b .prose p { margin-bottom: 1.3rem; }
+    .b .prose h2 { font-family: 'Instrument Serif', serif; font-size: 1.65rem; font-weight: 500; margin: 2rem 0 0.75rem; letter-spacing: -0.02em; }
+
+    /* OPTION C — 18.5px */
+    .c { font-size: 18.5px; line-height: 1.75; }
+    .c .tag { font-size: calc(0.6rem * 18.5/17); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #6A9BC0; margin-bottom: 0.75rem; }
+    .c h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2.1rem, 3.5vw, 2.8rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.1; color: #1C1410; }
+    .c .sub { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.15rem; color: #4A3828; margin-top: 0.75rem; }
+    .c .date { font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #7A6858; margin-top: 1rem; }
+    .c .prose { font-family: 'Literata', serif; font-size: 1.08rem; line-height: 1.8; color: #1C1410; margin-top: 2rem; }
+    .c .prose p { margin-bottom: 1.3rem; }
+    .c .prose h2 { font-family: 'Instrument Serif', serif; font-size: 1.75rem; font-weight: 500; margin: 2rem 0 0.75rem; letter-spacing: -0.02em; }
+
+    .divider { width: 3rem; height: 2px; background: #6A9BC0; margin: 1.5rem 0; opacity: 0.5; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <span>Type Scale</span>
+    <a href="#a">A — 17px (current)</a>
+    <a href="#b">B — 18px</a>
+    <a href="#c">C — 18.5px</a>
+  </div>
+
+  <div class="options">
+    <!-- OPTION A -->
+    <div class="option a" id="a">
+      <div class="label">A — 17px (current)</div>
+      <div class="tag">Company Building, Future of Work</div>
+      <h1>New Ontologies: Ando</h1>
+      <div class="sub">Inside Ando</div>
+      <div class="date">February 14, 2026</div>
+      <div class="divider"></div>
+      <div class="prose">
+        <h2>A first look into Ando</h2>
+        <p>It's Friday night in San Francisco, and engineers are leaving parties early to work with their AI agents. Full attention on the phone, barely pausing to respond.</p>
+        <p>Ando is remarkably quiet online. Though the team has raised double digit millions from blue chip investors, there is no official funding announcement, no public product, no launch party.</p>
+        <p>Sara Du, the CEO of Ando and previous CEO of Alloy Automation, is far more interested in crafting the precise right feeling in the product for early users than trying to brute force her way to more exposure.</p>
+      </div>
+    </div>
+
+    <!-- OPTION B -->
+    <div class="option b" id="b">
+      <div class="label">B — 18px</div>
+      <div class="tag">Company Building, Future of Work</div>
+      <h1>New Ontologies: Ando</h1>
+      <div class="sub">Inside Ando</div>
+      <div class="date">February 14, 2026</div>
+      <div class="divider"></div>
+      <div class="prose">
+        <h2>A first look into Ando</h2>
+        <p>It's Friday night in San Francisco, and engineers are leaving parties early to work with their AI agents. Full attention on the phone, barely pausing to respond.</p>
+        <p>Ando is remarkably quiet online. Though the team has raised double digit millions from blue chip investors, there is no official funding announcement, no public product, no launch party.</p>
+        <p>Sara Du, the CEO of Ando and previous CEO of Alloy Automation, is far more interested in crafting the precise right feeling in the product for early users than trying to brute force her way to more exposure.</p>
+      </div>
+    </div>
+
+    <!-- OPTION C -->
+    <div class="option c" id="c">
+      <div class="label">C — 18.5px</div>
+      <div class="tag">Company Building, Future of Work</div>
+      <h1>New Ontologies: Ando</h1>
+      <div class="sub">Inside Ando</div>
+      <div class="date">February 14, 2026</div>
+      <div class="divider"></div>
+      <div class="prose">
+        <h2>A first look into Ando</h2>
+        <p>It's Friday night in San Francisco, and engineers are leaving parties early to work with their AI agents. Full attention on the phone, barely pausing to respond.</p>
+        <p>Ando is remarkably quiet online. Though the team has raised double digit millions from blue chip investors, there is no official funding announcement, no public product, no launch party.</p>
+        <p>Sara Du, the CEO of Ando and previous CEO of Alloy Automation, is far more interested in crafting the precise right feeling in the product for early users than trying to brute force her way to more exposure.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Background Shade Adjuster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter Tight', sans-serif;
+      background: #1C1208;
+      color: #E8E4DC;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+    }
+
+    /* ── CONTROL PANEL ── */
+    .panel {
+      background: #221608;
+      border-right: 1px solid #3A2A1A;
+      padding: 2rem 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .panel-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #E8E4DC;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-subtitle {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6A6055;
+      margin-top: 0.25rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .control-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8A8070;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-value {
+      font-family: 'Inter Tight', monospace;
+      font-size: 0.72rem;
+      color: #9EBEC6;
+      font-weight: 400;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: #48403A;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #9EBEC6;
+      cursor: pointer;
+    }
+
+    .swatch-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.15s, transform 0.1s;
+      flex-shrink: 0;
+    }
+
+    .swatch:hover { transform: scale(1.1); }
+    .swatch.active { border-color: #9EBEC6; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #3A2A1A;
+    }
+
+    .hex-output {
+      background: #2E1A10;
+      border: 1px solid #48403A;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .hex-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+    }
+
+    .hex-name {
+      color: #8A8070;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.62rem;
+    }
+
+    .hex-val {
+      font-family: monospace;
+      color: #9EBEC6;
+      cursor: pointer;
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+
+    .hex-val:hover { background: #3A2A1A; }
+    .hex-val.copied { color: #D5D5BC; }
+
+    .copy-hint {
+      font-size: 0.6rem;
+      color: #48403A;
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    /* ── PREVIEW ── */
+    .preview {
+      overflow-y: auto;
+    }
+
+    .preview-inner {
+      min-height: 100vh;
+      transition: background 0.1s;
+    }
+
+    /* Site chrome */
+    .site-header {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-logo {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: var(--text-black);
+      text-decoration: none;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-nav a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-500);
+      text-decoration: none;
+    }
+
+    .hero-image {
+      height: 280px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.35)),
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1280px-GoldenGateBridge-001.jpg') center/cover;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem 3rem;
+    }
+
+    .hero-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+
+    .about-strip {
+      display: flex;
+      gap: 3rem;
+      padding: 2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .about-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-400);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+
+    .about-text {
+      font-size: 0.82rem;
+      color: var(--text-500);
+      line-height: 1.75;
+    }
+
+    .post-list {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      list-style: none;
+    }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .post-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--text-black);
+      margin-bottom: 0.4rem;
+    }
+
+    .post-excerpt {
+      font-size: 0.88rem;
+      color: var(--text-500);
+      line-height: 1.55;
+    }
+
+    .post-meta {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-400);
+      white-space: nowrap;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-400);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CONTROL PANEL -->
+  <div class="panel">
+    <div>
+      <div class="panel-title">Background shade</div>
+      <div class="panel-subtitle">Pearl #D5D5BC base</div>
+    </div>
+
+    <!-- Lightness -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Lightness</span>
+        <span class="control-value" id="lbl-l">84%</span>
+      </div>
+      <input type="range" id="sl-l" min="55" max="97" step="1" value="84" />
+    </div>
+
+    <!-- Chroma / saturation -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Chroma (warmth)</span>
+        <span class="control-value" id="lbl-c">6%</span>
+      </div>
+      <input type="range" id="sl-c" min="0" max="18" step="1" value="6" />
+    </div>
+
+    <!-- Hue shift -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Hue shift</span>
+        <span class="control-value" id="lbl-h">95°</span>
+      </div>
+      <input type="range" id="sl-h" min="60" max="130" step="1" value="95" />
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Presets -->
+    <div class="control-group">
+      <div class="control-label"><span>Presets</span></div>
+      <div class="swatch-row" id="presets"></div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Output -->
+    <div class="hex-output" id="hex-output">
+      <div class="hex-row">
+        <span class="hex-name">--cream</span>
+        <span class="hex-val" id="hex-cream" title="Click to copy">#D5D5BC</span>
+      </div>
+      <div class="hex-row">
+        <span class="hex-name">--cream-dark</span>
+        <span class="hex-val" id="hex-dark" title="Click to copy">#C8C8AE</span>
+      </div>
+      <div class="hex-row">
+        <span class="hex-name">--cream-light</span>
+        <span class="hex-val" id="hex-light" title="Click to copy">#E2E2CE</span>
+      </div>
+    </div>
+    <div class="copy-hint">Click a value to copy</div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview">
+    <div class="preview-inner" id="preview">
+
+      <header class="site-header">
+        <a class="site-logo">New Ontologies</a>
+        <nav class="site-nav">
+          <a>Archive</a>
+          <a>About</a>
+        </nav>
+      </header>
+
+      <div class="hero-image">
+        <div class="hero-title">New<br>Ontologies</div>
+      </div>
+
+      <div class="about-strip">
+        <div class="about-label">About</div>
+        <div class="about-text">An independent publication of conversations with consequential founders. For the futures that don't yet exist, founders create language that serves as an entry point into rich, intellectual worlds.</div>
+      </div>
+
+      <ul class="post-list">
+        <li class="post-item">
+          <div>
+            <div class="post-tag">Company Building</div>
+            <div class="post-title">New Ontologies: Ando</div>
+            <div class="post-excerpt">Inside Ando — the founders who are inventing new language for the futures they're building.</div>
+          </div>
+          <div class="post-meta">Feb 2026</div>
+        </li>
+        <li class="post-item">
+          <div>
+            <div class="post-tag">Future of Work</div>
+            <div class="post-title">The Labeling Economy and Its Discontents</div>
+            <div class="post-excerpt">There is a quiet labor market that structures what AI systems can perceive. Its workers are largely invisible to the models they train.</div>
+          </div>
+          <div class="post-meta">Jan 2026</div>
+        </li>
+        <li class="post-item">
+          <div>
+            <div class="post-tag">Technology</div>
+            <div class="post-title">On Health Systems and Ontological Change</div>
+            <div class="post-excerpt">When a health system changes its categories of disease, it changes not just how it treats patients, but who counts as a patient at all.</div>
+          </div>
+          <div class="post-meta">Dec 2025</div>
+        </li>
+      </ul>
+
+      <footer class="site-footer">
+        <span>© 2026 New Ontologies</span>
+        <span>About</span>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    // ── Presets: [label, L, C, H]
+    const presets = [
+      { label: 'Original Pearl', l: 84, c: 6, h: 95, hex: '#D5D5BC' },
+      { label: 'Lighter Pearl', l: 91, c: 5, h: 95, hex: '#E8E8D5' },
+      { label: 'Very Light', l: 95, c: 3, h: 95, hex: '#F2F2EC' },
+      { label: 'Warm Linen', l: 91, c: 7, h: 80, hex: '#EDE8D8' },
+      { label: 'Cool White', l: 94, c: 2, h: 200, hex: '#EEF0EF' },
+      { label: 'Warm White', l: 94, c: 4, h: 80, hex: '#F3EFE6' },
+      { label: 'Sage Tint', l: 91, c: 4, h: 120, hex: '#E5EAE0' },
+      { label: 'Blue Tint', l: 91, c: 4, h: 220, hex: '#E0E5EA' },
+      { label: 'Deeper Pearl', l: 78, c: 7, h: 95, hex: '#C8C8B0' },
+      { label: 'Parchment', l: 88, c: 9, h: 75, hex: '#EAE3CC' },
+    ];
+
+    // Build swatch row
+    const swatchRow = document.getElementById('presets');
+    presets.forEach((p, i) => {
+      const s = document.createElement('div');
+      s.className = 'swatch' + (i === 0 ? ' active' : '');
+      s.style.background = p.hex;
+      s.title = p.label;
+      s.dataset.idx = i;
+      s.addEventListener('click', () => {
+        document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+        s.classList.add('active');
+        document.getElementById('sl-l').value = p.l;
+        document.getElementById('sl-c').value = p.c;
+        document.getElementById('sl-h').value = p.h;
+        update();
+      });
+      swatchRow.appendChild(s);
+    });
+
+    // LCH → sRGB (simple CSS oklch via canvas trick using CSS)
+    function oklchToHex(l_pct, c_pct, h_deg) {
+      // Use a temporary element with oklch color to extract computed rgb
+      const el = document.createElement('div');
+      el.style.display = 'none';
+      el.style.color = `oklch(${l_pct}% ${c_pct / 100} ${h_deg})`;
+      document.body.appendChild(el);
+      const computed = getComputedStyle(el).color;
+      document.body.removeChild(el);
+      // Parse rgb(r, g, b)
+      const m = computed.match(/\d+/g);
+      if (!m) return '#D5D5BC';
+      const r = parseInt(m[0]).toString(16).padStart(2, '0');
+      const g = parseInt(m[1]).toString(16).padStart(2, '0');
+      const b = parseInt(m[2]).toString(16).padStart(2, '0');
+      return `#${r}${g}${b}`;
+    }
+
+    function shiftL(l, delta) { return Math.max(0, Math.min(100, l + delta)); }
+
+    function update() {
+      const L = parseInt(document.getElementById('sl-l').value);
+      const C = parseInt(document.getElementById('sl-c').value);
+      const H = parseInt(document.getElementById('sl-h').value);
+
+      document.getElementById('lbl-l').textContent = L + '%';
+      document.getElementById('lbl-c').textContent = C + '%';
+      document.getElementById('lbl-h').textContent = H + '°';
+
+      const cream      = oklchToHex(L,       C,     H);
+      const creamDark  = oklchToHex(shiftL(L, -5),  C,     H);
+      const creamLight = oklchToHex(shiftL(L, +5),  C,     H);
+
+      // Text and accent derived from Licorice / Light Blue (fixed)
+      const textBlack  = '#24140C';
+      const text500    = '#8A6650';
+      const text400    = '#A88B78';
+      const border     = oklchToHex(shiftL(L, -12), C + 2, H);
+      const accent     = '#9EBEC6';
+
+      const preview = document.getElementById('preview');
+      preview.style.setProperty('--bg', cream);
+      preview.style.setProperty('--border', border);
+      preview.style.setProperty('--text-black', textBlack);
+      preview.style.setProperty('--text-500', text500);
+      preview.style.setProperty('--text-400', text400);
+      preview.style.setProperty('--accent', accent);
+      preview.style.background = cream;
+
+      document.getElementById('hex-cream').textContent  = cream;
+      document.getElementById('hex-dark').textContent   = creamDark;
+      document.getElementById('hex-light').textContent  = creamLight;
+    }
+
+    // Sliders
+    ['sl-l','sl-c','sl-h'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+        update();
+      });
+    });
+
+    // Copy on click
+    document.querySelectorAll('.hex-val').forEach(el => {
+      el.addEventListener('click', () => {
+        navigator.clipboard.writeText(el.textContent).then(() => {
+          el.classList.add('copied');
+          const orig = el.textContent;
+          el.textContent = 'copied!';
+          setTimeout(() => { el.textContent = orig; el.classList.remove('copied'); }, 1200);
+        });
+      });
+    });
+
+    update();
+  </script>
+</body>
+</html>

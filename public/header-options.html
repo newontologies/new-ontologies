@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Ontologies — Header Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ── TOKENS ── */
+:root {
+  --black: #1A0905;
+  --g900: #2A1208;
+  --g700: #563020;
+  --g500: #8A6050;
+  --g400: #A88878;
+  --g300: #C8B0A4;
+  --g100: #DDD5CC;
+  --cream: #E3DFCE;
+  --accent: #94B1C8;
+  --red: #4C050C;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Inter Tight', -apple-system, sans-serif;
+  --max: 1000px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 18px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--sans); background: #cdc9b8; }
+
+/* ── SWITCHER ── */
+.switcher-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(227,223,206,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--g300);
+  display: flex; padding: 0 1.5rem; overflow-x: auto;
+}
+.switcher-bar button {
+  font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--g500); background: none; border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.85rem 1rem; cursor: pointer; white-space: nowrap;
+  transition: color 0.15s;
+}
+.switcher-bar button:hover { color: var(--black); }
+.switcher-bar button.active { color: var(--black); border-bottom-color: var(--black); }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; background: var(--cream); padding-top: 44px; }
+.page.active { display: block; }
+
+/* ── SHARED NAV ── */
+.nav {
+  max-width: var(--max); margin: 0 auto;
+  padding: 1.1rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-family: var(--serif); font-size: 1.15rem; color: var(--black); text-decoration: none; letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { font-size: 0.65rem; font-weight: 500; color: var(--g500); text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; }
+.toggle { background: none; border: 1px solid var(--g300); border-radius: 20px; width: 1.9rem; height: 1rem; cursor: pointer; padding: 0; position: relative; }
+.toggle-dot { display: block; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--g300); position: absolute; top: 50%; left: 0.15rem; transform: translateY(-50%); }
+
+/* ── SHARED POST SECTION ── */
+.posts { max-width: var(--max); margin: 0 auto; padding: 0 2.5rem; }
+
+/* featured card */
+.feat-card { display: block; text-decoration: none; cursor: pointer; border-bottom: 1px solid var(--g100); padding-bottom: 1.5rem; }
+.feat-img { width: 100%; height: 260px; overflow: hidden; position: relative; }
+.feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) brightness(0.95); transition: filter 0.5s ease; }
+.feat-card:hover .feat-img img { filter: grayscale(0) brightness(1); }
+.feat-body { padding: 0.9rem 0 0; display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
+.feat-title { font-family: var(--serif); font-size: 1.65rem; font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--black); transition: color 0.2s; }
+.feat-card:hover .feat-title { color: var(--red); }
+.feat-sub { font-size: 0.8rem; color: var(--g500); line-height: 1.5; margin-top: 0.3rem; }
+.feat-meta { font-size: 0.63rem; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+
+/* thumb list */
+.thumb-list { list-style: none; }
+.thumb-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 1.1rem; align-items: start; border-bottom: 1px solid var(--g100); padding: 1.1rem 0; cursor: pointer; }
+.thumb-item:last-child { border-bottom: none; }
+.thumb-img { width: 90px; aspect-ratio: 4/3; overflow: hidden; position: relative; }
+.thumb-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) brightness(0.95); transition: filter 0.5s ease; }
+.thumb-item:hover .thumb-img img { filter: grayscale(0) brightness(1); }
+.thumb-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--black); transition: color 0.2s; }
+.thumb-item:hover .thumb-title { color: var(--red); }
+.thumb-sub { font-size: 0.75rem; color: var(--g500); line-height: 1.5; margin-top: 0.25rem; }
+.thumb-tag { display: inline-block; margin-top: 0.4rem; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); border: 1px solid var(--accent); padding: 0.1em 0.4em; border-radius: 2px; }
+.thumb-meta { font-size: 0.63rem; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+
+/* footer */
+.foot { border-top: 1px solid var(--g100); padding: 1.5rem 2.5rem; margin-top: 1rem; }
+.foot-inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; }
+.foot a { color: var(--g500); text-decoration: none; }
+
+/* shared post block used by all options */
+.post-block { padding-top: 2rem; }
+
+
+/* ══════════════════════════════════════
+   A — COMPACT HEADER
+   small wordmark, one-liner, image, posts dominate
+   ══════════════════════════════════════ */
+#pa .header {
+  max-width: var(--max); margin: 0 auto;
+  padding: 2rem 2.5rem 1.5rem;
+  display: flex; align-items: baseline; gap: 2rem;
+  border-bottom: 1px solid var(--g100);
+}
+#pa .header-title {
+  font-family: var(--serif); font-size: 1.9rem; font-weight: 400;
+  letter-spacing: -0.025em; color: var(--black); white-space: nowrap;
+  flex-shrink: 0;
+}
+#pa .header-tagline {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.95rem; color: var(--g500); line-height: 1.5;
+}
+#pa .hero-img { max-width: var(--max); margin: 0 auto; height: 220px; overflow: hidden; }
+#pa .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+/* ══════════════════════════════════════
+   B — MEDIUM TITLE LEFT + DESCRIPTION
+   balanced: title and text at same size, image below
+   ══════════════════════════════════════ */
+#pb .header {
+  max-width: var(--max); margin: 0 auto;
+  padding: 3rem 2.5rem 2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end;
+}
+#pb .header-title {
+  font-family: var(--serif); font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 400;
+  line-height: 0.95; letter-spacing: -0.03em; color: var(--black);
+}
+#pb .header-right { padding-bottom: 0.2rem; }
+#pb .header-label {
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.6rem;
+}
+#pb .header-desc {
+  font-size: 0.82rem; color: var(--g500); line-height: 1.75;
+}
+#pb .hero-img {
+  max-width: var(--max); margin: 0 auto;
+  border-top: 1px solid var(--g100); border-bottom: 1px solid var(--g100);
+  height: 240px; overflow: hidden;
+}
+#pb .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+/* ══════════════════════════════════════
+   C — LARGE TITLE + SMALL ASIDE (current opt-6)
+   big title left, description tucked right, image band
+   ══════════════════════════════════════ */
+#pc .header {
+  max-width: var(--max); margin: 0 auto;
+  padding: 3.5rem 2.5rem 0;
+  display: grid; grid-template-columns: 1fr 240px; gap: 2.5rem; align-items: end;
+  padding-bottom: 1.5rem;
+}
+#pc .header-title {
+  font-family: var(--serif); font-size: clamp(3rem, 5.5vw, 5.5rem); font-weight: 400;
+  line-height: 0.88; letter-spacing: -0.035em; color: var(--black);
+}
+#pc .header-aside-label {
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.5rem;
+}
+#pc .header-aside-text { font-size: 0.78rem; color: var(--g500); line-height: 1.7; }
+#pc .hero-img {
+  height: 260px; overflow: hidden;
+  border-top: 1px solid var(--g100); border-bottom: 1px solid var(--g100);
+}
+#pc .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+/* ══════════════════════════════════════
+   D — OVERSIZED TITLE
+   massive title (almost full width), no description, image below
+   ══════════════════════════════════════ */
+#pd .header {
+  max-width: var(--max); margin: 0 auto;
+  padding: 2.5rem 2.5rem 0;
+}
+#pd .header-title {
+  font-family: var(--serif); font-size: clamp(4rem, 8.5vw, 8.5rem); font-weight: 400;
+  line-height: 0.85; letter-spacing: -0.04em; color: var(--black);
+}
+#pd .header-rule {
+  display: flex; align-items: center; gap: 1rem; margin-top: 1rem; padding-bottom: 0;
+}
+#pd .header-rule-line { flex: 1; height: 1px; background: var(--g100); }
+#pd .header-rule-text {
+  font-family: var(--serif); font-style: italic; font-size: 0.9rem;
+  color: var(--g400); white-space: nowrap;
+}
+#pd .hero-img {
+  height: 220px; overflow: hidden; margin-top: 1.5rem;
+  border-top: 1px solid var(--g100); border-bottom: 1px solid var(--g100);
+}
+#pd .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+/* ══════════════════════════════════════
+   E — TITLE OVERLAID ON IMAGE
+   cinematic: image full-bleed, title sits bottom-left
+   ══════════════════════════════════════ */
+#pe .hero {
+  position: relative; height: 360px; overflow: hidden;
+}
+#pe .hero img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(0.75);
+}
+#pe .hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(26,9,5,0.55) 100%);
+}
+#pe .hero-text {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 2.5rem 2rem;
+}
+#pe .header-title {
+  font-family: var(--serif); font-size: clamp(2.8rem, 5.5vw, 5rem); font-weight: 400;
+  line-height: 0.9; letter-spacing: -0.03em; color: #FAF5EE;
+}
+#pe .header-tagline {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1rem; color: rgba(250,245,238,0.75); margin-top: 0.6rem;
+}
+#pe .about-strip {
+  max-width: var(--max); margin: 0 auto;
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid var(--g100);
+  display: flex; gap: 2rem; align-items: start;
+}
+#pe .about-label {
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--g400); white-space: nowrap; padding-top: 0.15rem;
+}
+#pe .about-text { font-size: 0.78rem; color: var(--g500); line-height: 1.75; max-width: 500px; }
+
+
+/* ══════════════════════════════════════
+   MOBILE
+   ══════════════════════════════════════ */
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  .nav { padding: 1rem 1.25rem; }
+  .posts { padding: 0 1.25rem; }
+  .foot { padding: 1.25rem; }
+
+  #pa .header { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
+  #pb .header { grid-template-columns: 1fr; gap: 1.25rem; padding: 2rem 1.25rem 1.5rem; }
+  #pc .header { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.25rem 1.25rem; }
+  #pd .header { padding: 1.75rem 1.25rem 0; }
+  #pd .hero-img { margin-top: 1rem; }
+  #pe .hero { height: 280px; }
+  #pe .hero-text { padding: 0 1.25rem 1.5rem; }
+  #pe .about-strip { padding: 1.25rem; flex-direction: column; gap: 0.4rem; }
+
+  .feat-img { height: 200px; }
+  .feat-body { grid-template-columns: 1fr; gap: 0.2rem; }
+  .feat-meta { order: -1; }
+  .thumb-item { grid-template-columns: 72px 1fr; gap: 0.85rem; }
+  .thumb-meta { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="switcher-bar">
+  <button class="active" onclick="show('a')">A — Compact header</button>
+  <button onclick="show('b')">B — Title + description balanced</button>
+  <button onclick="show('c')">C — Large title, small aside</button>
+  <button onclick="show('d')">D — Oversized title</button>
+  <button onclick="show('e')">E — Title on image</button>
+</div>
+
+
+<!-- ═══ A ═══ -->
+<div class="page active" id="pa">
+  <nav class="nav"><a class="nav-logo" href="#">New Ontologies</a><div class="nav-links"><a href="#">Archive</a><a href="#">About</a><button class="toggle"><span class="toggle-dot"></span></button></div></nav>
+  <div class="header">
+    <h1 class="header-title">New Ontologies</h1>
+    <p class="header-tagline">An independent publication of conversations with consequential founders.</p>
+  </div>
+  <div class="hero-img">
+    <img src="/images/teampic.jpg" alt="">
+  </div>
+  <div class="posts post-block">
+    <a class="feat-card" href="#">
+      <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+      <div class="feat-body"><div><h2 class="feat-title">New Ontologies: Ando</h2><p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p></div><span class="feat-meta">Feb 2026</span></div>
+    </a>
+    <ul class="thumb-list">
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div><div><h2 class="thumb-title">The Language of Future Companies</h2><p class="thumb-sub">How founders create worlds before they exist</p><span class="thumb-tag">language & culture</span></div><span class="thumb-meta">Jan 2026</span></li>
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/bw.jpg" alt=""></div><div><h2 class="thumb-title">On Building in Public</h2><p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p></div><span class="thumb-meta">Dec 2025</span></li>
+    </ul>
+  </div>
+  <footer class="foot"><div class="foot-inner"><span>© 2026 New Ontologies</span><a href="#">About</a></div></footer>
+</div>
+
+
+<!-- ═══ B ═══ -->
+<div class="page" id="pb">
+  <nav class="nav"><a class="nav-logo" href="#">New Ontologies</a><div class="nav-links"><a href="#">Archive</a><a href="#">About</a><button class="toggle"><span class="toggle-dot"></span></button></div></nav>
+  <div class="header">
+    <h1 class="header-title">New<br>Ontologies</h1>
+    <div class="header-right">
+      <p class="header-label">About this publication</p>
+      <p class="header-desc">An independent publication of conversations with consequential founders. Language shapes who we are, and who we can become.</p>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="/images/teampic.jpg" alt="">
+  </div>
+  <div class="posts post-block">
+    <a class="feat-card" href="#">
+      <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+      <div class="feat-body"><div><h2 class="feat-title">New Ontologies: Ando</h2><p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p></div><span class="feat-meta">Feb 2026</span></div>
+    </a>
+    <ul class="thumb-list">
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div><div><h2 class="thumb-title">The Language of Future Companies</h2><p class="thumb-sub">How founders create worlds before they exist</p><span class="thumb-tag">language & culture</span></div><span class="thumb-meta">Jan 2026</span></li>
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/bw.jpg" alt=""></div><div><h2 class="thumb-title">On Building in Public</h2><p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p></div><span class="thumb-meta">Dec 2025</span></li>
+    </ul>
+  </div>
+  <footer class="foot"><div class="foot-inner"><span>© 2026 New Ontologies</span><a href="#">About</a></div></footer>
+</div>
+
+
+<!-- ═══ C ═══ -->
+<div class="page" id="pc">
+  <nav class="nav"><a class="nav-logo" href="#">New Ontologies</a><div class="nav-links"><a href="#">Archive</a><a href="#">About</a><button class="toggle"><span class="toggle-dot"></span></button></div></nav>
+  <div class="header">
+    <h1 class="header-title">New<br>Ontologies</h1>
+    <div>
+      <p class="header-aside-label">About this publication</p>
+      <p class="header-aside-text">An independent publication of conversations with consequential founders. Language shapes who we are, and who we can become.</p>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="/images/teampic.jpg" alt="">
+  </div>
+  <div class="posts post-block">
+    <a class="feat-card" href="#">
+      <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+      <div class="feat-body"><div><h2 class="feat-title">New Ontologies: Ando</h2><p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p></div><span class="feat-meta">Feb 2026</span></div>
+    </a>
+    <ul class="thumb-list">
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div><div><h2 class="thumb-title">The Language of Future Companies</h2><p class="thumb-sub">How founders create worlds before they exist</p><span class="thumb-tag">language & culture</span></div><span class="thumb-meta">Jan 2026</span></li>
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/bw.jpg" alt=""></div><div><h2 class="thumb-title">On Building in Public</h2><p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p></div><span class="thumb-meta">Dec 2025</span></li>
+    </ul>
+  </div>
+  <footer class="foot"><div class="foot-inner"><span>© 2026 New Ontologies</span><a href="#">About</a></div></footer>
+</div>
+
+
+<!-- ═══ D ═══ -->
+<div class="page" id="pd">
+  <nav class="nav"><a class="nav-logo" href="#">New Ontologies</a><div class="nav-links"><a href="#">Archive</a><a href="#">About</a><button class="toggle"><span class="toggle-dot"></span></button></div></nav>
+  <div class="header">
+    <h1 class="header-title">New<br>Ontologies</h1>
+    <div class="header-rule">
+      <div class="header-rule-line"></div>
+      <span class="header-rule-text">Language shapes who we are, and who we can become.</span>
+      <div class="header-rule-line"></div>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="/images/teampic.jpg" alt="">
+  </div>
+  <div class="posts post-block">
+    <a class="feat-card" href="#">
+      <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+      <div class="feat-body"><div><h2 class="feat-title">New Ontologies: Ando</h2><p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p></div><span class="feat-meta">Feb 2026</span></div>
+    </a>
+    <ul class="thumb-list">
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div><div><h2 class="thumb-title">The Language of Future Companies</h2><p class="thumb-sub">How founders create worlds before they exist</p><span class="thumb-tag">language & culture</span></div><span class="thumb-meta">Jan 2026</span></li>
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/bw.jpg" alt=""></div><div><h2 class="thumb-title">On Building in Public</h2><p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p></div><span class="thumb-meta">Dec 2025</span></li>
+    </ul>
+  </div>
+  <footer class="foot"><div class="foot-inner"><span>© 2026 New Ontologies</span><a href="#">About</a></div></footer>
+</div>
+
+
+<!-- ═══ E ═══ -->
+<div class="page" id="pe">
+  <nav class="nav"><a class="nav-logo" href="#">New Ontologies</a><div class="nav-links"><a href="#">Archive</a><a href="#">About</a><button class="toggle"><span class="toggle-dot"></span></button></div></nav>
+  <div class="hero">
+    <img src="/images/teampic.jpg" alt="">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1 class="header-title">New Ontologies</h1>
+      <p class="header-tagline">Language shapes who we are, and who we can become.</p>
+    </div>
+  </div>
+  <div class="about-strip">
+    <span class="about-label">About</span>
+    <p class="about-text">An independent publication of conversations with consequential founders. For the futures that don't yet exist, founders create language that serves as an entry point into rich, intellectual worlds.</p>
+  </div>
+  <div class="posts post-block">
+    <a class="feat-card" href="#">
+      <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+      <div class="feat-body"><div><h2 class="feat-title">New Ontologies: Ando</h2><p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p></div><span class="feat-meta">Feb 2026</span></div>
+    </a>
+    <ul class="thumb-list">
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div><div><h2 class="thumb-title">The Language of Future Companies</h2><p class="thumb-sub">How founders create worlds before they exist</p><span class="thumb-tag">language & culture</span></div><span class="thumb-meta">Jan 2026</span></li>
+      <li class="thumb-item"><div class="thumb-img"><img src="/images/bw.jpg" alt=""></div><div><h2 class="thumb-title">On Building in Public</h2><p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p></div><span class="thumb-meta">Dec 2025</span></li>
+    </ul>
+  </div>
+  <footer class="foot"><div class="foot-inner"><span>© 2026 New Ontologies</span><a href="#">About</a></div></footer>
+</div>
+
+
+<script>
+function show(id) {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.switcher-bar button').forEach(el => el.classList.remove('active'));
+  document.getElementById('p' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

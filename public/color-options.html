@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Palette Options — New Ontologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400;1,7..72,500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  /* === SWITCHER === */
+  .switcher {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #111;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .switcher-label {
+    color: #eee;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
+
+  .switcher button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #eee;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.4em 0.9em;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .switcher button:hover { border-color: #eee; }
+
+  .switcher button.active {
+    background: #eee;
+    color: #111;
+    border-color: #eee;
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  .switcher button.active .swatch {
+    border-color: rgba(0,0,0,0.2);
+  }
+
+  /* === PALETTE INFO === */
+  .palette-info {
+    padding: 1.5rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: background 0.4s, border-color 0.4s;
+  }
+
+  .palette-name {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    transition: color 0.4s;
+  }
+
+  .palette-desc {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    opacity: 0.7;
+    max-width: 500px;
+    transition: color 0.4s;
+  }
+
+  .palette-swatches {
+    margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .palette-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+    cursor: default;
+  }
+
+  .palette-swatch::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    opacity: 0.5;
+  }
+
+  /* === MOCK SITE === */
+  .mock-site {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .mock-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    transition: color 0.4s;
+  }
+
+  .mock-logo {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .mock-nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .mock-header {
+    padding: 3rem 0 2rem;
+    margin-bottom: 2.5rem;
+    transition: border-color 0.4s;
+  }
+
+  .mock-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    transition: color 0.4s;
+  }
+
+  .mock-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    transition: color 0.4s;
+  }
+
+  .mock-subtitle {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 300;
+    opacity: 0.7;
+    transition: color 0.4s;
+  }
+
+  .mock-date {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.5;
+    transition: color 0.4s;
+  }
+
+  .mock-divider {
+    border: none;
+    height: 1px;
+    transition: background 0.4s;
+    margin-top: 2rem;
+  }
+
+  .mock-prose {
+    font-family: 'Literata', Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+    transition: color 0.4s;
+  }
+
+  .mock-prose p { margin-bottom: 1.3rem; }
+
+  .mock-prose h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.85rem;
+    font-weight: 500;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    transition: color 0.4s;
+  }
+
+  .mock-bq {
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    transition: color 0.4s, border-color 0.4s;
+  }
+
+  .mock-link {
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+    transition: color 0.4s, text-decoration-color 0.4s;
+  }
+
+  /* === PROGRESS BAR === */
+  .mock-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 45%;
+    z-index: 50;
+    transition: background 0.4s;
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-progress" id="mockProgress"></div>
+
+<div class="switcher">
+  <span class="switcher-label">Palette</span>
+
+  <button class="active" data-palette="current">
+    <span class="swatch" style="background:#E3DFCE;"></span>
+    Current
+  </button>
+  <button data-palette="warm-cream">
+    <span class="swatch" style="background:#F5F0E8;"></span>
+    Warm Cream
+  </button>
+  <button data-palette="soft-blue">
+    <span class="swatch" style="background:#E8EEF4;"></span>
+    Soft Blue
+  </button>
+  <button data-palette="slate-blue">
+    <span class="swatch" style="background:#2C3E50;"></span>
+    Slate Blue
+  </button>
+  <button data-palette="ivory">
+    <span class="swatch" style="background:#FAFAF5;"></span>
+    Ivory
+  </button>
+  <button data-palette="ocean">
+    <span class="swatch" style="background:#1B2838;"></span>
+    Deep Ocean
+  </button>
+  <button data-palette="sand">
+    <span class="swatch" style="background:#F0EBE1;"></span>
+    Sand & Steel
+  </button>
+</div>
+
+<div class="palette-info" id="paletteInfo">
+  <span class="palette-name" id="paletteName">Current</span>
+  <span class="palette-desc" id="paletteDesc">Your existing warm cream palette with brown/burgundy tones.</span>
+  <div class="palette-swatches" id="paletteSwatches"></div>
+</div>
+
+<div class="mock-site">
+  <nav class="mock-nav">
+    <span class="mock-logo">New Ontologies</span>
+    <div class="mock-nav-links">
+      <span>Archive</span>
+      <span>About</span>
+    </div>
+  </nav>
+
+  <header class="mock-header" id="mockHeader">
+    <div class="mock-tag" id="mockTag">company building</div>
+    <h1 class="mock-title">New Ontologies of Companies</h1>
+    <p class="mock-subtitle">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+    <div class="mock-date">February 15, 2026</div>
+    <hr class="mock-divider" id="mockDivider">
+  </header>
+
+  <div class="mock-prose">
+    <p>As the poet Paul Valéry once wrote: the opening line of a poem is like finding a fruit on the ground, a piece of fallen fruit you have never seen before, and the poet's task is to create the tree from which such a fruit would fall.</p>
+
+    <p>Valéry's description of the poet strikes me as similar to the founder's journey. The task for the founder is to create an internal and external frame that implicitly stakes a philosophical claim, from which every aspect of the company grows out of.</p>
+
+    <h2>Defining New Vocabularies</h2>
+
+    <p>I've long been interested in what I call new ontologies of companies. How does a company define a <a href="#" class="mock-link" id="mockLink">new vocabulary</a> to transmit meaning and purpose? How can a company serve as a doorway into a rich, intellectual world?</p>
+
+    <blockquote class="mock-bq" id="mockBq">The task for the founder is to create an internal and external frame that implicitly stakes a philosophical claim, from which every aspect of the company grows out of.</blockquote>
+
+    <p>My hope is to write the story of exceptional founders and "share some of early clay" by discussing the product thoughtfully. This is why my essays would differ from a Colossus founder profile, a Mario Gabriele essay — there is much more emphasis on product.</p>
+
+    <p>The texture of a company reveals itself in the details — the language of the interface, the rhythm of the onboarding, the way error states are handled. These small decisions accumulate into something that feels coherent, or doesn't.</p>
+
+    <h2>The Shape of the Product</h2>
+
+    <p>What makes Ando different is not any single feature but the cumulative effect of hundreds of small decisions that all point in the same direction. The onboarding doesn't just collect information — it teaches you how to think about your finances.</p>
+
+    <p>This is what I mean by ontology. The company doesn't just sell a product. It proposes a way of understanding the world. And if the ontology is coherent — if every surface reinforces the same set of ideas — then the product becomes something more than the sum of its features. It becomes a worldview you can inhabit.</p>
+  </div>
+</div>
+
+<script>
+const palettes = {
+  'current': {
+    name: 'Current',
+    desc: 'Your existing warm cream palette with brown/burgundy tones.',
+    bg: '#E3DFCE',
+    text: '#1A0905',
+    textSoft: '#563020',
+    accent: '#94B1C8',
+    border: '#C8B0A4',
+    tag: '#94B1C8',
+    progress: '#94B1C8',
+    swatches: [
+      { color: '#E3DFCE', label: 'bg' },
+      { color: '#1A0905', label: 'text' },
+      { color: '#563020', label: 'body' },
+      { color: '#94B1C8', label: 'accent' },
+      { color: '#C8B0A4', label: 'border' },
+    ]
+  },
+  'warm-cream': {
+    name: 'Warm Cream',
+    desc: 'Lighter, warmer cream. Opens the page up while keeping warmth. Blue accent pops more.',
+    bg: '#F5F0E8',
+    text: '#1C1410',
+    textSoft: '#4A3828',
+    accent: '#6A9BC0',
+    border: '#D8D0C4',
+    tag: '#6A9BC0',
+    progress: '#6A9BC0',
+    swatches: [
+      { color: '#F5F0E8', label: 'bg' },
+      { color: '#1C1410', label: 'text' },
+      { color: '#4A3828', label: 'body' },
+      { color: '#6A9BC0', label: 'accent' },
+      { color: '#D8D0C4', label: 'border' },
+    ]
+  },
+  'soft-blue': {
+    name: 'Soft Blue',
+    desc: 'Cool blue-gray background. Editorial, calm. Pairs cream accent for warmth.',
+    bg: '#E8EEF4',
+    text: '#1A2530',
+    textSoft: '#3A4F60',
+    accent: '#B8885C',
+    border: '#C8D4DE',
+    tag: '#6A8FAA',
+    progress: '#6A8FAA',
+    swatches: [
+      { color: '#E8EEF4', label: 'bg' },
+      { color: '#1A2530', label: 'text' },
+      { color: '#3A4F60', label: 'body' },
+      { color: '#B8885C', label: 'accent' },
+      { color: '#6A8FAA', label: 'tag' },
+    ]
+  },
+  'slate-blue': {
+    name: 'Slate Blue',
+    desc: 'Dark editorial. Rich navy background with cream text. Sophisticated, evening-read feel.',
+    bg: '#2C3E50',
+    text: '#F0EBE1',
+    textSoft: '#C8BDAE',
+    accent: '#94B1C8',
+    border: '#3D5166',
+    tag: '#94B1C8',
+    progress: '#94B1C8',
+    swatches: [
+      { color: '#2C3E50', label: 'bg' },
+      { color: '#F0EBE1', label: 'text' },
+      { color: '#C8BDAE', label: 'body' },
+      { color: '#94B1C8', label: 'accent' },
+      { color: '#3D5166', label: 'border' },
+    ]
+  },
+  'ivory': {
+    name: 'Ivory',
+    desc: 'Near-white with warm undertone. Clean, modern, maximum readability. Blue as true accent.',
+    bg: '#FAFAF5',
+    text: '#1A1A18',
+    textSoft: '#4A4A42',
+    accent: '#5B8BA8',
+    border: '#E0DED6',
+    tag: '#5B8BA8',
+    progress: '#5B8BA8',
+    swatches: [
+      { color: '#FAFAF5', label: 'bg' },
+      { color: '#1A1A18', label: 'text' },
+      { color: '#4A4A42', label: 'body' },
+      { color: '#5B8BA8', label: 'accent' },
+      { color: '#E0DED6', label: 'border' },
+    ]
+  },
+  'ocean': {
+    name: 'Deep Ocean',
+    desc: 'Very dark blue-black. Dramatic, immersive. Cream and sky-blue text. Bold statement.',
+    bg: '#1B2838',
+    text: '#E8E2D6',
+    textSoft: '#A8B4BE',
+    accent: '#7EB8D8',
+    border: '#2E4052',
+    tag: '#7EB8D8',
+    progress: '#7EB8D8',
+    swatches: [
+      { color: '#1B2838', label: 'bg' },
+      { color: '#E8E2D6', label: 'text' },
+      { color: '#A8B4BE', label: 'body' },
+      { color: '#7EB8D8', label: 'accent' },
+      { color: '#2E4052', label: 'border' },
+    ]
+  },
+  'sand': {
+    name: 'Sand & Steel',
+    desc: 'Warm sand background with cool steel-blue accent. Natural contrast between warm and cool.',
+    bg: '#F0EBE1',
+    text: '#222222',
+    textSoft: '#555248',
+    accent: '#5E7F95',
+    border: '#D4CEC2',
+    tag: '#5E7F95',
+    progress: '#5E7F95',
+    swatches: [
+      { color: '#F0EBE1', label: 'bg' },
+      { color: '#222222', label: 'text' },
+      { color: '#555248', label: 'body' },
+      { color: '#5E7F95', label: 'accent' },
+      { color: '#D4CEC2', label: 'border' },
+    ]
+  }
+};
+
+const buttons = document.querySelectorAll('.switcher button');
+const paletteInfo = document.getElementById('paletteInfo');
+const paletteName = document.getElementById('paletteName');
+const paletteDesc = document.getElementById('paletteDesc');
+const paletteSwatches = document.getElementById('paletteSwatches');
+const mockProgress = document.getElementById('mockProgress');
+const mockHeader = document.getElementById('mockHeader');
+const mockDivider = document.getElementById('mockDivider');
+const mockTag = document.getElementById('mockTag');
+const mockBq = document.getElementById('mockBq');
+const mockLink = document.getElementById('mockLink');
+
+function applyPalette(key) {
+  const p = palettes[key];
+
+  document.body.style.background = p.bg;
+  document.body.style.color = p.text;
+
+  paletteInfo.style.background = p.bg;
+  paletteInfo.style.borderBottom = '1px solid ' + p.border;
+  paletteName.textContent = p.name;
+  paletteName.style.color = p.text;
+  paletteDesc.textContent = p.desc;
+  paletteDesc.style.color = p.textSoft;
+
+  // Swatches
+  paletteSwatches.innerHTML = '';
+  p.swatches.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'palette-swatch';
+    div.style.background = s.color;
+    div.setAttribute('data-label', s.label);
+    div.style.setProperty('--label-color', p.textSoft);
+    paletteSwatches.appendChild(div);
+  });
+
+  // Progress bar
+  mockProgress.style.background = p.progress;
+
+  // Header
+  mockDivider.style.background = p.border;
+  mockTag.style.color = p.tag;
+
+  // Blockquote
+  mockBq.style.borderLeft = '2px solid ' + p.accent;
+  mockBq.style.color = p.text;
+
+  // Link
+  mockLink.style.color = p.text;
+  mockLink.style.textDecorationColor = p.accent;
+
+  // Prose
+  document.querySelectorAll('.mock-prose').forEach(el => el.style.color = p.text);
+  document.querySelectorAll('.mock-prose h2').forEach(el => el.style.color = p.text);
+  document.querySelectorAll('.mock-title').forEach(el => el.style.color = p.text);
+  document.querySelectorAll('.mock-subtitle').forEach(el => el.style.color = p.textSoft);
+  document.querySelectorAll('.mock-date').forEach(el => el.style.color = p.textSoft);
+  document.querySelectorAll('.mock-logo').forEach(el => el.style.color = p.text);
+  document.querySelectorAll('.mock-nav-links').forEach(el => el.style.color = p.text);
+}
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyPalette(btn.dataset.palette);
+  });
+});
+
+// Init
+applyPalette('current');
+</script>
+
+</body>
+</html>

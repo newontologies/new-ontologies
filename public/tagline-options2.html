@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tagline Options II — New Ontologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #1A0905;
+    --cream: #E3DFCE;
+    --accent: #94B1C8;
+    --gray-400: #A88878;
+    --gray-500: #8A6050;
+    --gray-300: #C8B0A4;
+    --border: #C8B0A4;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter Tight', sans-serif;
+  }
+  body { background: #ECEAE3; font-family: var(--font-body); color: var(--black); padding: 2rem; }
+
+  .switcher { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .switcher button {
+    font-family: var(--font-body); font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; padding: 0.4em 1em;
+    border: 1px solid var(--border); border-radius: 2px; background: white;
+    color: var(--gray-500); cursor: pointer; transition: all 0.15s;
+  }
+  .switcher button.active, .switcher button:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+  .option { display: none; }
+  .option.active { display: block; }
+
+  .site { background: var(--cream); max-width: 1100px; margin: 0 auto; border: 1px solid var(--border); overflow: hidden; }
+
+  /* Nav */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .logo { font-family: var(--font-display); font-size: 3rem; color: var(--black); text-decoration: none; letter-spacing: -0.03em; line-height: 0.9; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-500); text-decoration: none; }
+
+  /* Hero */
+  .hero { position: relative; height: 280px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(26,9,5,0.32); }
+
+  /* Posts */
+  .posts { padding: 0 2.5rem 2rem; }
+  .feat-card { display: block; text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1.2rem; margin-top: 1.5rem; }
+  .feat-img-wrap { width: 100%; height: 200px; overflow: hidden; }
+  .feat-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.9); transition: filter 0.5s; }
+  .feat-card:hover .feat-img-wrap img { filter: grayscale(0) brightness(1); }
+  .feat-body { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding-top: 0.8rem; align-items: start; }
+  .feat-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--black); letter-spacing: -0.02em; line-height: 1.15; }
+  .feat-sub { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.2rem; line-height: 1.5; }
+  .feat-meta { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-400); white-space: nowrap; }
+
+  /* ══ E1 — Big question, description inline on same baseline row ══ */
+  .tag-e1 {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 3rem;
+    align-items: end;
+  }
+  .tag-e1-q {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--black);
+  }
+  .tag-e1-desc {
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    max-width: 260px;
+    padding-bottom: 0.2rem;
+  }
+
+  /* ══ E2 — Question huge, description tucked right below with a rule ══ */
+  .tag-e2 {
+    padding: 2rem 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-e2-q {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3.4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--black);
+    max-width: 780px;
+  }
+  .tag-e2-rule {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    padding-bottom: 1.25rem;
+  }
+  .tag-e2-rule::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gray-400);
+    flex-shrink: 0;
+  }
+  .tag-e2-desc {
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    line-height: 1.6;
+  }
+
+  /* ══ E3 — Question + accent number / issue count ══ */
+  .tag-e3 {
+    padding: 1.75rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .tag-e3-count {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .tag-e3-right { display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.35rem; }
+  .tag-e3-q {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--black);
+  }
+  .tag-e3-desc {
+    font-size: 0.7rem;
+    color: var(--gray-500);
+    line-height: 1.65;
+    max-width: 480px;
+  }
+
+  /* ══ F1 — Two columns: question left (bigger), details right (stacked) ══ */
+  .tag-f1 {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-f1-left {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--border);
+  }
+  .tag-f1-q {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--black);
+  }
+  .tag-f1-right {
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .tag-f1-item {}
+  .tag-f1-label {
+    font-size: 0.58rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.3rem;
+  }
+  .tag-f1-text { font-size: 0.78rem; color: var(--gray-500); line-height: 1.55; }
+
+  /* ══ F2 — Horizontal row of 3, no labels, just numbered ══ */
+  .tag-f2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-f2-col {
+    padding: 1.5rem 2rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tag-f2-col:last-child { border-right: none; }
+  .tag-f2-num {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-style: italic;
+    color: var(--gray-400);
+  }
+  .tag-f2-text {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--black);
+  }
+
+  /* ══ F3 — Full-width single row, question spills wide, small right col ══ */
+  .tag-f3 {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    border-bottom: 1px solid var(--border);
+    align-items: stretch;
+  }
+  .tag-f3-left {
+    padding: 1.75rem 2.5rem;
+    border-right: 1px solid var(--border);
+  }
+  .tag-f3-q {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--black);
+  }
+  .tag-f3-right {
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  .tag-f3-stat { }
+  .tag-f3-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--black);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .tag-f3-label {
+    font-size: 0.58rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--gray-400); margin-top: 0.1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <button class="active" onclick="show('e1')">E1 — Question + side desc</button>
+  <button onclick="show('e2')">E2 — Question + ruled desc below</button>
+  <button onclick="show('e3')">E3 — Number accent + question</button>
+  <button onclick="show('f1')">F1 — Question left, details right</button>
+  <button onclick="show('f2')">F2 — Three numbered pillars</button>
+  <button onclick="show('f3')">F3 — Wide question + stats col</button>
+</div>
+
+<template id="top">
+  <header class="nav">
+    <a href="#" class="logo">New Ontologies</a>
+    <nav class="nav-links"><a href="#">Archive</a><a href="#">About</a></nav>
+  </header>
+  <div class="hero">
+    <img src="/images/halftone-bridge.png" alt="" />
+    <div class="hero-overlay"></div>
+  </div>
+</template>
+
+<template id="posts">
+  <div class="posts">
+    <a class="feat-card" href="#">
+      <div class="feat-img-wrap"><img src="/images/teampic.jpg" alt="" /></div>
+      <div class="feat-body">
+        <div>
+          <div class="feat-title">New Ontologies: Ando</div>
+          <div class="feat-sub">Inside Ando — building the scaffolding for a new communication layer between agents and humans.</div>
+        </div>
+        <div class="feat-meta">Feb 2026</div>
+      </div>
+    </a>
+  </div>
+</template>
+
+<div class="option active" id="opt-e1"><div class="site"></div></div>
+<div class="option" id="opt-e2"><div class="site"></div></div>
+<div class="option" id="opt-e3"><div class="site"></div></div>
+<div class="option" id="opt-f1"><div class="site"></div></div>
+<div class="option" id="opt-f2"><div class="site"></div></div>
+<div class="option" id="opt-f3"><div class="site"></div></div>
+
+<script>
+  const midHTML = {
+    'e1': `<div class="tag-e1">
+      <p class="tag-e1-q">How do we talk more<br>ambitiously about the future?</p>
+      <p class="tag-e1-desc">Long-form field studies of the people and products reshaping cultural infrastructure.</p>
+    </div>`,
+
+    'e2': `<div class="tag-e2">
+      <p class="tag-e2-q">How do we talk more ambitiously about the future?</p>
+      <div class="tag-e2-rule">
+        <span class="tag-e2-desc">Long-form field studies of the people and products reshaping cultural infrastructure.</span>
+      </div>
+    </div>`,
+
+    'e3': `<div class="tag-e3">
+      <span class="tag-e3-count">01</span>
+      <div class="tag-e3-right">
+        <p class="tag-e3-q">How do we talk more ambitiously about the future?</p>
+        <p class="tag-e3-desc">Long-form field studies of the people and products reshaping cultural infrastructure.</p>
+      </div>
+    </div>`,
+
+    'f1': `<div class="tag-f1">
+      <div class="tag-f1-left">
+        <p class="tag-f1-q">How do we talk more ambitiously about the future?</p>
+      </div>
+      <div class="tag-f1-right">
+        <div class="tag-f1-item">
+          <div class="tag-f1-label">The work</div>
+          <p class="tag-f1-text">Long-form field studies of consequential companies and founders.</p>
+        </div>
+        <div class="tag-f1-item">
+          <div class="tag-f1-label">The form</div>
+          <p class="tag-f1-text">First entry points into new, rich intellectual worlds.</p>
+        </div>
+      </div>
+    </div>`,
+
+    'f2': `<div class="tag-f2">
+      <div class="tag-f2-col">
+        <span class="tag-f2-num">i.</span>
+        <p class="tag-f2-text">How do we talk more ambitiously about the future?</p>
+      </div>
+      <div class="tag-f2-col">
+        <span class="tag-f2-num">ii.</span>
+        <p class="tag-f2-text">Long-form field studies of consequential companies and founders.</p>
+      </div>
+      <div class="tag-f2-col">
+        <span class="tag-f2-num">iii.</span>
+        <p class="tag-f2-text">First entry points into new, rich intellectual worlds.</p>
+      </div>
+    </div>`,
+
+    'f3': `<div class="tag-f3">
+      <div class="tag-f3-left">
+        <p class="tag-f3-q">How do we talk more ambitiously about the future?</p>
+      </div>
+      <div class="tag-f3-right">
+        <div class="tag-f3-stat">
+          <div class="tag-f3-num">12</div>
+          <div class="tag-f3-label">Field studies</div>
+        </div>
+        <div class="tag-f3-stat">
+          <div class="tag-f3-num">4</div>
+          <div class="tag-f3-label">Years running</div>
+        </div>
+      </div>
+    </div>`,
+  };
+
+  const keys = ['e1','e2','e3','f1','f2','f3'];
+
+  function buildSite(key) {
+    const top = document.getElementById('top').content.cloneNode(true);
+    const bot = document.getElementById('posts').content.cloneNode(true);
+    const site = document.querySelector(`#opt-${key} .site`);
+    site.innerHTML = '';
+    site.appendChild(top);
+    site.insertAdjacentHTML('beforeend', midHTML[key]);
+    site.appendChild(bot);
+  }
+
+  function show(key) {
+    document.querySelectorAll('.option').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.switcher button').forEach(el => el.classList.remove('active'));
+    document.getElementById('opt-' + key).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  keys.forEach(buildSite);
+</script>
+</body>
+</html>

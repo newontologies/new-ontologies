@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Ontologies — Technical Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap');
+
+  :root {
+    --black: #111;
+    --gray-900: #1a1a1a;
+    --gray-700: #3d3d3d;
+    --gray-500: #6b6b6b;
+    --gray-400: #8a8a8a;
+    --gray-300: #b0b0b0;
+    --gray-100: #e8e8e8;
+    --cream: #F5F0E8;
+    --cream-dark: #EDE7DB;
+    --accent: #D4A017;
+    --accent-light: #F2D264;
+    --accent-faint: #FDF6E3;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter Tight', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--gray-900);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- NAV --- */
+  .toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #EDE7DB;
+    border-right: 1px solid var(--gray-300);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .toc-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--black);
+    margin-bottom: 0.25rem;
+  }
+
+  .toc-subtitle {
+    font-size: 0.68rem;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .toc a {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-left: 2px solid transparent;
+    margin-bottom: 0.1rem;
+    transition: all 0.15s;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .toc a:hover { color: var(--black); background: rgba(0,0,0,0.03); }
+  .toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+  .toc .toc-section-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-400);
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.75rem;
+  }
+
+  .toc-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--cream-dark);
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    color: var(--gray-700);
+  }
+
+  /* --- MAIN --- */
+  .main {
+    margin-left: 260px;
+    max-width: 780px;
+    padding: 3rem 3.5rem 6rem;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--gray-300);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--black);
+  }
+
+  .hero p {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  /* --- PROGRESS --- */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 260px;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    z-index: 50;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.1s;
+  }
+
+  /* --- SECTIONS --- */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section h2 {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: var(--black);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  section h3 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-400);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  section p {
+    font-size: 0.92rem;
+    color: var(--gray-700);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  /* --- CARDS (expandable) --- */
+  .card {
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    background: var(--cream);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--gray-400); }
+  .card.open { border-color: var(--accent); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: var(--accent-faint);
+    border: 1px solid var(--accent);
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--black);
+  }
+
+  .card-arrow {
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .card.open .card-arrow { transform: rotate(90deg); color: var(--accent); }
+
+  .card-body {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+    padding-left: calc(1.25rem + 1.6rem + 0.75rem);
+  }
+
+  .card.open .card-body { display: block; }
+
+  .card-body p {
+    font-size: 0.88rem;
+    color: var(--gray-700);
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* --- CODE BLOCKS --- */
+  .code-block {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    overflow-x: auto;
+  }
+
+  .code-block code {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+  }
+
+  .code-block .comment { color: #6a9955; }
+  .code-block .keyword { color: #c586c0; }
+  .code-block .string { color: #ce9178; }
+  .code-block .tag { color: #569cd6; }
+  .code-block .attr { color: #9cdcfe; }
+  .code-block .punct { color: #808080; }
+
+  .code-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* --- ANALOGY BOXES --- */
+  .analogy {
+    border-left: 2px solid var(--accent);
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    background: var(--accent-faint);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .analogy-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .analogy p {
+    font-size: 0.85rem;
+    color: var(--gray-700);
+    margin-bottom: 0;
+    line-height: 1.6;
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+
+  /* --- FILE MAP --- */
+  .file-tree {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 2;
+    color: var(--gray-700);
+    padding: 1rem 0;
+  }
+
+  .file-tree .dir { color: var(--accent); font-weight: 600; }
+  .file-tree .file { color: var(--gray-500); }
+  .file-tree .desc {
+    color: var(--gray-400);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+  }
+
+  .file-tree .indent { padding-left: 1.5rem; }
+  .file-tree .indent2 { padding-left: 3rem; }
+
+  /* --- TRY IT: interactive demos --- */
+  .try-it {
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    background: rgba(212,160,23,0.04);
+  }
+
+  .try-it-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .try-it p { font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+  .color-demo {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .color-swatch {
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.active { border-color: var(--black); box-shadow: 0 0 0 2px var(--cream), 0 0 0 4px var(--black); }
+
+  .color-swatch-label {
+    position: absolute;
+    bottom: -1.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.58rem;
+    font-family: var(--font-mono);
+    color: var(--gray-400);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .color-swatch:hover .color-swatch-label { opacity: 1; }
+
+  .color-result {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    background: #1a1a1a;
+    color: #e0e0e0;
+    line-height: 1.8;
+  }
+
+  /* --- PROMPT EXAMPLES --- */
+  .prompt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+  }
+
+  .prompt-ex {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    cursor: default;
+    transition: transform 0.15s;
+  }
+
+  .prompt-ex:hover { transform: translateY(-1px); }
+
+  .prompt-bad {
+    background: #fdf0f0;
+    border: 1px solid #e8c4c4;
+    color: #8b4545;
+  }
+
+  .prompt-good {
+    background: #f0f7f0;
+    border: 1px solid #c4dcc4;
+    color: #3d6b3d;
+  }
+
+  .prompt-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+    opacity: 0.7;
+  }
+
+  /* --- CHECKLIST --- */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 0.85rem;
+    color: var(--gray-700);
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 0.65rem;
+    color: transparent;
+  }
+
+  .check-box:hover { border-color: var(--accent); }
+  .check-box.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .checklist li.done { color: var(--gray-400); text-decoration: line-through; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 800px) {
+    .toc { transform: translateX(-100%); }
+    .toc.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+    .toc-toggle { display: block; }
+    .main { margin-left: 0; padding: 3rem 1.5rem 4rem; }
+    .progress-bar { left: 0; }
+    .prompt-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-bar-fill" id="progress"></div></div>
+
+<!-- Mobile toggle -->
+<button class="toc-toggle" id="toc-toggle" onclick="document.querySelector('.toc').classList.toggle('open')">Menu</button>
+
+<!-- Sidebar -->
+<nav class="toc" id="toc">
+  <div class="toc-title">New Ontologies</div>
+  <div class="toc-subtitle">Technical Guide</div>
+
+  <div class="toc-section-label">Foundations</div>
+  <a href="#map">Your Project Map</a>
+  <a href="#mental-model">The Mental Model</a>
+  <a href="#css-variables">CSS Variables</a>
+
+  <div class="toc-section-label">Expanding Possibilities</div>
+  <a href="#frontmatter">Frontmatter as Database</a>
+  <a href="#collections">Multiple Collections</a>
+  <a href="#components">Reusable Components</a>
+  <a href="#dynamic">Dynamic Content</a>
+  <a href="#interactivity">Client-Side Interactivity</a>
+
+  <div class="toc-section-label">Working With Claude</div>
+  <a href="#prompting">How to Prompt</a>
+  <a href="#checklist">Quick Fixes Checklist</a>
+</nav>
+
+<!-- Main content -->
+<div class="main">
+
+  <div class="hero" id="top">
+    <h1>A Technical Guide to<br>Your Project</h1>
+    <p>Concepts that expand how you think about what is possible — written for your specific codebase, in language you already use.</p>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION: PROJECT MAP -->
+  <!-- ============================== -->
+  <section id="map">
+    <h2>Your Project Map</h2>
+    <p>Every file in your project has a role. Here's what matters and what each piece does. You can ignore everything else (especially <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--accent-faint);padding:0.1em 0.3em;border-radius:3px;">node_modules/</code> — that's library code Astro needs internally).</p>
+
+    <div class="file-tree">
+      <div><span class="dir">src/</span> <span class="desc">— all your source code lives here</span></div>
+      <div class="indent"><span class="dir">pages/</span> <span class="desc">— every file here becomes a URL on your site</span></div>
+      <div class="indent2"><span class="file">index.astro</span> <span class="desc">— your homepage</span></div>
+      <div class="indent2"><span class="file">about.astro</span> <span class="desc">— your about page</span></div>
+      <div class="indent2"><span class="dir">posts/</span> <span class="desc">— each .md file here becomes an article</span></div>
+      <div class="indent"><span class="dir">layouts/</span> <span class="desc">— templates that wrap your content</span></div>
+      <div class="indent2"><span class="file">Base.astro</span> <span class="desc">— header + footer + dark mode (wraps every page)</span></div>
+      <div class="indent2"><span class="file">Post.astro</span> <span class="desc">— the article template (wraps each post)</span></div>
+      <div class="indent"><span class="dir">styles/</span></div>
+      <div class="indent2"><span class="file">global.css</span> <span class="desc">— all your visual design lives in this single file</span></div>
+      <div><span class="dir">public/</span> <span class="desc">— images, favicon — served as-is to visitors</span></div>
+      <div class="indent"><span class="file">images/</span> <span class="desc">— put your article images here</span></div>
+      <div><span class="file">package.json</span> <span class="desc">— project name + dependencies (rarely touch this)</span></div>
+      <div><span class="file">astro.config.mjs</span> <span class="desc">— Astro settings (rarely touch this)</span></div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-label">Analogy</div>
+      <p>Think of it like a building. <strong>layouts/</strong> is the architecture — walls, roof, doors. <strong>pages/</strong> is the furniture and art you put inside each room. <strong>styles/</strong> is the paint, textures, and lighting. <strong>public/</strong> is the stuff visitors can pick up and hold.</p>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- SECTION: MENTAL MODEL -->
+  <!-- ============================== -->
+  <section id="mental-model">
+    <h2>The Mental Model</h2>
+    <p>Your site is built with <strong>Astro</strong>. There's really only one big idea to internalize:</p>
+
+    <div class="analogy">
+      <div class="analogy-label">Core idea</div>
+      <p>Files equal pages. If you create a file at <code style="font-family:var(--font-mono);font-size:0.78em;">src/pages/letters/first.md</code>, your site will have a page at <code style="font-family:var(--font-mono);font-size:0.78em;">yoursite.com/letters/first</code>. No configuration needed. The folder structure <em>is</em> the site structure.</p>
+    </div>
+
+    <p>There are two types of files you'll work with:</p>
+
+    <h3>.md files (Markdown) — your content</h3>
+    <p>This is where you write your articles. Markdown is a simple text format: <code style="font-family:var(--font-mono);font-size:0.82em;">**bold**</code> for <strong>bold</strong>, <code style="font-family:var(--font-mono);font-size:0.82em;">*italic*</code> for <em>italic</em>, <code style="font-family:var(--font-mono);font-size:0.82em;">## Heading</code> for headings, <code style="font-family:var(--font-mono);font-size:0.82em;">> quote</code> for blockquotes. You already know this from your posts.</p>
+
+    <h3>.astro files — your templates and pages</h3>
+    <p>These mix HTML (structure), CSS (visual design), and JavaScript (behavior). Your homepage <code style="font-family:var(--font-mono);font-size:0.82em;">index.astro</code> is an .astro file because it does more than display text — it queries all your posts and renders them as a list. You generally won't need to edit these directly — that's what you have me for.</p>
+  </section>
+
+  <!-- ============================== -->
+  <!-- SECTION: CSS VARIABLES -->
+  <!-- ============================== -->
+  <section id="css-variables">
+    <h2>CSS Variables: Your Design Control Panel</h2>
+    <p>At the top of your <code style="font-family:var(--font-mono);font-size:0.82em;">global.css</code> file, there's a block of named values. These are <strong>CSS variables</strong> — named design tokens that are referenced everywhere else in the file. Change the value once, and it updates across the entire site.</p>
+
+    <div class="code-block">
+      <span class="code-label">global.css</span>
+      <code>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="attr">--accent</span>: <span class="string">#D4A017</span>;      <span class="comment">/* the gold color used everywhere */</span><br>
+&nbsp;&nbsp;<span class="attr">--font-display</span>: <span class="string">'Instrument Serif'</span>; <span class="comment">/* headlines */</span><br>
+&nbsp;&nbsp;<span class="attr">--font-body</span>: <span class="string">'Inter Tight'</span>;       <span class="comment">/* body text */</span><br>
+&nbsp;&nbsp;<span class="attr">--cream</span>: <span class="string">#F5F0E8</span>;        <span class="comment">/* background color */</span><br>
+&nbsp;&nbsp;<span class="attr">--max-width</span>: <span class="string">860px</span>;      <span class="comment">/* how wide the content area is */</span><br>
+}
+      </code>
+    </div>
+
+    <div class="try-it">
+      <div class="try-it-label">Try it — Pick an accent color</div>
+      <p>Click a color below to see how a single CSS variable change ripples through the design.</p>
+      <div class="color-demo">
+        <div class="color-swatch active" style="background:#D4A017" onclick="setAccent(this, '#D4A017', 'Gold (current)')">
+          <span class="color-swatch-label">Gold</span>
+        </div>
+        <div class="color-swatch" style="background:#C45B3E" onclick="setAccent(this, '#C45B3E', 'Terracotta')">
+          <span class="color-swatch-label">Terracotta</span>
+        </div>
+        <div class="color-swatch" style="background:#5B8C6E" onclick="setAccent(this, '#5B8C6E', 'Sage')">
+          <span class="color-swatch-label">Sage</span>
+        </div>
+        <div class="color-swatch" style="background:#6B5B8C" onclick="setAccent(this, '#6B5B8C', 'Plum')">
+          <span class="color-swatch-label">Plum</span>
+        </div>
+        <div class="color-swatch" style="background:#3E7CA5" onclick="setAccent(this, '#3E7CA5', 'Slate Blue')">
+          <span class="color-swatch-label">Slate Blue</span>
+        </div>
+        <div class="color-swatch" style="background:#111111" onclick="setAccent(this, '#111111', 'Black')">
+          <span class="color-swatch-label">Black</span>
+        </div>
+      </div>
+      <div class="color-result" id="color-result">
+        <span class="comment">/* What you'd tell Claude: */</span><br>
+        "Change the accent color to <span id="color-name">gold</span>" → <span class="attr">--accent</span>: <span class="string" id="color-hex">#D4A017</span>;
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- SECTION: EXPANDING POSSIBILITIES -->
+  <!-- ============================== -->
+  <section id="frontmatter">
+    <h2>5 Things That Expand What's Possible</h2>
+    <p>Click each card to expand it.</p>
+
+    <div class="card open" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-header-left">
+          <span class="card-number">1</span>
+          <span class="card-title">Frontmatter is your content database</span>
+        </div>
+        <span class="card-arrow">&#9654;</span>
+      </div>
+      <div class="card-body">
+        <p>The <code style="font-family:var(--font-mono);font-size:0.82em;">---</code> block at the top of each markdown file is called <strong>frontmatter</strong>. It's structured data about the post — distinct from the post content itself.</p>
+        <p>Right now your posts have <code style="font-family:var(--font-mono);font-size:0.82em;">title</code>, <code style="font-family:var(--font-mono);font-size:0.82em;">subtitle</code>, <code style="font-family:var(--font-mono);font-size:0.82em;">date</code>, and <code style="font-family:var(--font-mono);font-size:0.82em;">tag</code>. But you can add <strong>any fields you want</strong>, and your site can use them to filter, sort, and display posts differently.</p>
+        <div class="code-block">
+          <span class="code-label">Ando.md</span>
+          <code>
+<span class="punct">---</span><br>
+<span class="attr">title</span>: <span class="string">"New Ontologies: Ando"</span><br>
+<span class="attr">subtitle</span>: <span class="string">"Inside Ando"</span><br>
+<span class="attr">date</span>: <span class="string">2026-02-15</span><br>
+<span class="attr">tag</span>: <span class="string">company building, future of work</span><br>
+<span class="comment"><!-- You could add any of these: --></span><br>
+<span class="attr">featured</span>: <span class="string">true</span><br>
+<span class="attr">author</span>: <span class="string">"Nicole Seah"</span><br>
+<span class="attr">coverImage</span>: <span class="string">"/images/ando-cover.jpg"</span><br>
+<span class="attr">series</span>: <span class="string">"Founders"</span><br>
+<span class="attr">status</span>: <span class="string">"draft"</span><br>
+<span class="punct">---</span>
+          </code>
+        </div>
+        <p><strong>What this unlocks:</strong> A "Featured" section on the homepage. Cover images for posts. A draft system where posts with <code style="font-family:var(--font-mono);font-size:0.82em;">status: draft</code> are hidden from the live site. Filtering posts by series or author.</p>
+      </div>
+    </div>
+
+    <div class="card" data-card id="collections">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-header-left">
+          <span class="card-number">2</span>
+          <span class="card-title">Multiple collections and page types</span>
+        </div>
+        <span class="card-arrow">&#9654;</span>
+      </div>
+      <div class="card-body">
+        <p>Right now you only have <code style="font-family:var(--font-mono);font-size:0.82em;">posts/</code>. But you can create as many content types as you want — each with its own visual personality.</p>
+        <div class="code-block">
+          <span class="code-label">Possible new folders</span>
+          <code>
+<span class="dir">src/pages/</span><br>
+&nbsp;&nbsp;<span class="dir">posts/</span>      <span class="comment">← long-form articles (what you have now)</span><br>
+&nbsp;&nbsp;<span class="dir">notes/</span>      <span class="comment">← short-form observations, links, fragments</span><br>
+&nbsp;&nbsp;<span class="dir">letters/</span>    <span class="comment">← a newsletter archive</span><br>
+&nbsp;&nbsp;<span class="dir">library/</span>    <span class="comment">← a curated reading list</span><br>
+&nbsp;&nbsp;<span class="dir">glossary/</span>   <span class="comment">← a vocabulary of new ontologies</span><br>
+          </code>
+        </div>
+        <p>Each collection can have its own layout — different typography, different density, different energy. A glossary might be a single page with alphabetized terms. Notes might be short and dense. The site structure mirrors the intellectual structure of your publication.</p>
+      </div>
+    </div>
+
+    <div class="card" data-card id="components">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-header-left">
+          <span class="card-number">3</span>
+          <span class="card-title">Reusable components</span>
+        </div>
+        <span class="card-arrow">&#9654;</span>
+      </div>
+      <div class="card-body">
+        <p>A <strong>component</strong> is a reusable visual building block. Instead of writing raw HTML every time you want a styled image with a caption, you create a component once and reuse it everywhere.</p>
+        <div class="code-block">
+          <span class="code-label">What you'd write in a post</span>
+          <code>
+<span class="comment">&lt;!-- Instead of raw HTML: --&gt;</span><br>
+<span class="tag">&lt;Figure</span> <span class="attr">src</span>=<span class="string">"/images/ando-office.jpg"</span> <span class="attr">caption</span>=<span class="string">"Jackson Square, morning light"</span> <span class="tag">/&gt;</span><br><br>
+<span class="tag">&lt;Pullquote</span> <span class="attr">author</span>=<span class="string">"Sara Du"</span><span class="tag">&gt;</span><br>
+&nbsp;&nbsp;I was so raw as a 19-year-old, I just wanted to win.<br>
+<span class="tag">&lt;/Pullquote&gt;</span><br><br>
+<span class="tag">&lt;AuthorCard</span> <span class="attr">name</span>=<span class="string">"Sara Du"</span> <span class="attr">role</span>=<span class="string">"CEO, Ando"</span> <span class="tag">/&gt;</span>
+          </code>
+        </div>
+        <p>This is how you replace those <code style="font-family:var(--font-mono);font-size:0.82em;">[picture of product]</code> placeholders in your Ando article with something rich and consistent. You define the look once, then just fill in the details each time.</p>
+      </div>
+    </div>
+
+    <div class="card" data-card id="dynamic">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-header-left">
+          <span class="card-number">4</span>
+          <span class="card-title">Dynamic content from structured data</span>
+        </div>
+        <span class="card-arrow">&#9654;</span>
+      </div>
+      <div class="card-body">
+        <p>Your homepage already does this — it reads all posts, sorts them by date, and lists them automatically. You never have to manually update the homepage when you publish a new article. This pattern is very flexible:</p>
+        <ul class="checklist" style="margin-top:0.5rem;">
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Group posts by tag on an archive page</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Show "related posts" at the bottom of each article</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Auto-generate a page for each tag (e.g., <code style="font-family:var(--font-mono);font-size:0.78em;">yoursite.com/tags/company-building</code>)</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Create an RSS feed so readers can subscribe</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Build a search page that filters posts by keyword</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> Show a "latest post" banner on the about page</li>
+        </ul>
+        <p style="margin-top:0.75rem;">The key insight: <strong>your content's frontmatter is queryable</strong>. Anything you put in that <code style="font-family:var(--font-mono);font-size:0.82em;">---</code> block can be used to organize, filter, and display your content in new ways — without changing the content itself.</p>
+      </div>
+    </div>
+
+    <div class="card" data-card id="interactivity">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-header-left">
+          <span class="card-number">5</span>
+          <span class="card-title">Client-side interactivity</span>
+        </div>
+        <span class="card-arrow">&#9654;</span>
+      </div>
+      <div class="card-body">
+        <p>The <code style="font-family:var(--font-mono);font-size:0.82em;">&lt;script&gt;</code> blocks in your site are JavaScript that runs in the reader's browser. You already have two: the pixel-reveal animation on your hero image, and the dark mode toggle.</p>
+        <p>This is what makes a site feel alive versus static. Things you could add:</p>
+        <ul class="checklist" style="margin-top:0.5rem;">
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Reading progress bar</strong> — a thin line at the top showing how far through an article someone is (like this guide has)</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Scroll animations</strong> — sections fade in gently as you scroll down</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Active table of contents</strong> — highlights the current section as you read</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Expandable footnotes</strong> — hover or click to reveal a note without leaving the paragraph</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Copy-to-clipboard</strong> for quotes or links</li>
+          <li><span style="color:var(--accent);margin-right:0.3rem;">&#8594;</span> <strong>Email signup form</strong> — collect subscriber emails</li>
+        </ul>
+        <p style="margin-top:0.75rem;">This guide itself demonstrates several of these: the progress bar, the sidebar highlighting, the expandable cards, and the interactive color demo above. All of these are achievable in your project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- SECTION: PROMPTING -->
+  <!-- ============================== -->
+  <section id="prompting">
+    <h2>How to Prompt Claude</h2>
+    <p>You don't need to know how to code. You need to know how to describe what you want precisely. Here's the difference:</p>
+
+    <h3>Be specific about where and what</h3>
+    <div class="prompt-grid">
+      <div class="prompt-ex prompt-bad">
+        <div class="prompt-label">Vague</div>
+        "Make it look better"
+      </div>
+      <div class="prompt-ex prompt-good">
+        <div class="prompt-label">Specific</div>
+        "Make the post list on the homepage feel more spacious — more padding between items"
+      </div>
+    </div>
+
+    <h3>Reference what you see, not the code</h3>
+    <div class="prompt-grid">
+      <div class="prompt-ex prompt-bad">
+        <div class="prompt-label">Vague</div>
+        "Fix the typography"
+      </div>
+      <div class="prompt-ex prompt-good">
+        <div class="prompt-label">Specific</div>
+        "The subtitle on article pages feels too close to the title — add more space between them"
+      </div>
+    </div>
+
+    <h3>Describe the feeling, not just the feature</h3>
+    <div class="prompt-grid">
+      <div class="prompt-ex prompt-bad">
+        <div class="prompt-label">Thin</div>
+        "Add a hover effect to post links"
+      </div>
+      <div class="prompt-ex prompt-good">
+        <div class="prompt-label">Rich</div>
+        "When hovering on a post title, I want something subtle and warm — maybe the gold accent color, and a slight shift. Nothing flashy."
+      </div>
+    </div>
+
+    <h3>Screenshots are powerful</h3>
+    <p>You can drop a screenshot into the chat and say "make it look like this" or "this spacing feels off." Claude can read images and map what you see to the code that controls it.</p>
+
+    <h3>Ask what's possible before deciding</h3>
+    <div class="prompt-grid">
+      <div class="prompt-ex prompt-good" style="grid-column: 1 / -1;">
+        <div class="prompt-label">Great prompts</div>
+        "What are my options for displaying images in articles?"<br>
+        "Could the homepage have a featured post that looks different from the rest?"<br>
+        "Is it possible to have footnotes that expand on hover?"
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- SECTION: CHECKLIST -->
+  <!-- ============================== -->
+  <section id="checklist">
+    <h2>Quick Fixes You Can Ask For Now</h2>
+    <p>Things I noticed while reading your project that you might want to address. Check them off as we go.</p>
+
+    <ul class="checklist" id="fix-checklist">
+      <li>
+        <span class="check-box" onclick="toggleCheck(this)">&#10003;</span>
+        <span><strong>Broken image in base file.md</strong> — there's a line break inside the image markdown on line 20 that will prevent the Werner Herzog image from displaying.</span>
+      </li>
+      <li>
+        <span class="check-box" onclick="toggleCheck(this)">&#10003;</span>
+        <span><strong>Replace [picture of product] placeholders</strong> in the Ando article — we can set up a Figure component with captions for when you have the images ready.</span>
+      </li>
+      <li>
+        <span class="check-box" onclick="toggleCheck(this)">&#10003;</span>
+        <span><strong>Add meta images for social sharing</strong> — when someone shares your article on Twitter/LinkedIn, there's no preview image. We can add Open Graph tags.</span>
+      </li>
+      <li>
+        <span class="check-box" onclick="toggleCheck(this)">&#10003;</span>
+        <span><strong>Mobile responsiveness check</strong> — your CSS has mobile styles, but worth previewing on a phone to catch any issues.</span>
+      </li>
+      <li>
+        <span class="check-box" onclick="toggleCheck(this)">&#10003;</span>
+        <span><strong>Deploy to the web</strong> — your site only runs locally right now. We can deploy it to Vercel or Netlify for free in a few minutes.</span>
+      </li>
+    </ul>
+  </section>
+
+</div>
+
+<script>
+  // --- Card toggle ---
+  function toggleCard(header) {
+    const card = header.closest('.card');
+    card.classList.toggle('open');
+  }
+
+  // --- Accent color demo ---
+  function setAccent(el, hex, name) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('color-hex').textContent = hex;
+    document.getElementById('color-name').textContent = name.toLowerCase();
+
+    // Apply to this page as a live demo
+    document.documentElement.style.setProperty('--accent', hex);
+  }
+
+  // --- Checklist ---
+  function toggleCheck(box) {
+    box.classList.toggle('checked');
+    box.closest('li').classList.toggle('done');
+  }
+
+  // --- Progress bar ---
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+  });
+
+  // --- Active TOC link ---
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('.toc a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Close mobile nav on link click
+  tocLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.toc').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>

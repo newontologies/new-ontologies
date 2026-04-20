@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Page — Headshot Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+  :root {
+    --black: #1C1410;
+    --gray-900: #2A2018;
+    --gray-700: #4A3828;
+    --gray-500: #7A6858;
+    --gray-400: #9A8878;
+    --gray-300: #D8D0C4;
+    --gray-100: #EAE5DC;
+    --white: #F5F0E8;
+    --cream: #F5F0E8;
+    --accent: #6A9BC0;
+    --border-color: var(--gray-300);
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter Tight', -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font-body); color: var(--gray-900); background: #e8e3da; line-height: 1.65; }
+
+  .option-label {
+    max-width: 1000px;
+    margin: 3rem auto 0.75rem;
+    padding: 0 2.5rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .option-label span {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--gray-500);
+    font-size: 0.72rem;
+    margin-left: 0.5rem;
+  }
+
+  .option-wrap {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    background: var(--cream);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  /* Shared about styles */
+  .about-page { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem 3rem; }
+  .about-header { padding: 2.5rem 0 1.75rem; border-bottom: 1px solid var(--border-color); }
+  .about-eyebrow { display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); margin-bottom: 0.5rem; }
+  .about-name { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; line-height: 0.9; letter-spacing: -0.03em; color: var(--black); }
+
+  .about-bio-lead { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: var(--black); margin-bottom: 1.5rem; }
+  .about-bio-text { font-size: 0.85rem; color: var(--gray-500); line-height: 1.75; }
+  .about-bio-text p { margin-bottom: 1rem; }
+
+  .about-links { display: flex; gap: 0; margin-top: 1.5rem; border-top: 1px solid var(--border-color); }
+  .about-link { display: flex; align-items: center; gap: 0.3rem; padding: 0.75rem 1.25rem 0.75rem 0; margin-right: 1.5rem; font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); text-decoration: none; }
+
+  .placeholder-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    background: linear-gradient(135deg, var(--gray-300) 0%, var(--gray-100) 100%);
+  }
+
+  /* ===== OPTION A: Small circular beside name ===== */
+  .opt-a .about-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .opt-a .about-photo-inline {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .opt-a .about-photo-inline img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .opt-a .about-body {
+    padding-top: 2rem;
+  }
+
+  /* ===== OPTION B: Small square in the bio area ===== */
+  .opt-b .about-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-top: 2rem;
+  }
+  .opt-b .about-bio-top {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .opt-b .about-photo-small {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .opt-b .about-photo-small img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  /* ===== OPTION C: Tiny circle next to byline ===== */
+  .opt-c .about-body { padding-top: 2rem; }
+  .opt-c .about-byline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .opt-c .about-photo-tiny {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .opt-c .about-photo-tiny img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .opt-c .about-byline-text {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    line-height: 1.4;
+  }
+  .opt-c .about-byline-name {
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  /* ===== OPTION D: Narrow left column (160px instead of 300px) ===== */
+  .opt-d .about-body {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 3rem;
+    padding-top: 2rem;
+    align-items: start;
+  }
+  .opt-d .about-photo { overflow: hidden; }
+  .opt-d .about-photo img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+  }
+
+  /* ===== OPTION E: Float right, small ===== */
+  .opt-e .about-body {
+    padding-top: 2rem;
+  }
+  .opt-e .about-photo-float {
+    float: right;
+    width: 140px;
+    margin: 0 0 1rem 2rem;
+    overflow: hidden;
+  }
+  .opt-e .about-photo-float img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  }
+  .opt-e .about-body::after { content: ''; display: table; clear: both; }
+
+  /* ===== OPTION F: End of page, subtle ===== */
+  .opt-f .about-body { padding-top: 2rem; }
+  .opt-f .about-photo-bottom {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .opt-f .about-photo-bottom-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+  .opt-f .about-photo-bottom-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .opt-f .about-photo-bottom-text {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+
+  /* ===== OPTION G: F layout + B photo size (120px) ===== */
+  .opt-g .about-body { padding-top: 2rem; }
+  .opt-g .about-photo-bottom {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .opt-g .about-photo-bottom-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .opt-g .about-photo-bottom-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .opt-g .about-photo-bottom-text {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+</style>
+</head>
+<body>
+
+<!-- OPTION A -->
+<div class="option-label">Option A <span>— Small circle beside name in header</span></div>
+<div class="option-wrap">
+<div class="about-page opt-a">
+  <div class="about-header">
+    <div class="about-photo-inline">
+      <img src="/images/headshot.jpg" alt="Nicole Seah" />
+    </div>
+    <div>
+      <span class="about-eyebrow">About</span>
+      <h1 class="about-name">Nicole Seah</h1>
+    </div>
+  </div>
+  <div class="about-body">
+    <p class="about-bio-lead">
+      [Your one-line positioning statement goes here — what you do, what you care about.]
+    </p>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION B -->
+<div class="option-label">Option B <span>— Small square photo anchoring the lead paragraph</span></div>
+<div class="option-wrap">
+<div class="about-page opt-b">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <div class="about-bio-top">
+      <div class="about-photo-small">
+        <img src="/images/headshot.jpg" alt="Nicole Seah" />
+      </div>
+      <div>
+        <p class="about-bio-lead">
+          [Your one-line positioning statement goes here — what you do, what you care about.]
+        </p>
+      </div>
+    </div>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION C -->
+<div class="option-label">Option C <span>— Tiny circle as a byline element</span></div>
+<div class="option-wrap">
+<div class="about-page opt-c">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <div class="about-byline">
+      <div class="about-photo-tiny">
+        <img src="/images/headshot.jpg" alt="Nicole Seah" />
+      </div>
+      <div class="about-byline-text">
+        <span class="about-byline-name">Nicole Seah</span><br/>
+        Writer · Strategist · Builder
+      </div>
+    </div>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION D -->
+<div class="option-label">Option D <span>— Same layout, just narrower column (160px vs 300px)</span></div>
+<div class="option-wrap">
+<div class="about-page opt-d">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <div class="about-photo-col">
+      <div class="about-photo">
+        <img src="/images/headshot.jpg" alt="Nicole Seah" />
+      </div>
+    </div>
+    <div class="about-bio-col">
+      <p class="about-bio-lead">
+        [Your one-line positioning statement goes here — what you do, what you care about.]
+      </p>
+      <div class="about-bio-text">
+        <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+        <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+      </div>
+      <div class="about-links">
+        <a href="#" class="about-link">Substack ↗</a>
+        <a href="#" class="about-link">LinkedIn ↗</a>
+        <a href="#" class="about-link">Email ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION E -->
+<div class="option-label">Option E <span>— Floated right, small square, text wraps around</span></div>
+<div class="option-wrap">
+<div class="about-page opt-e">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <div class="about-photo-float">
+      <img src="/images/headshot.jpg" alt="Nicole Seah" />
+    </div>
+    <p class="about-bio-lead">
+      [Your one-line positioning statement goes here — what you do, what you care about.]
+    </p>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+      <p>[Third paragraph — anything personal, where you're based, what else you're working on.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION F -->
+<div class="option-label">Option F <span>— No photo at top; small circle at the bottom as a sign-off</span></div>
+<div class="option-wrap">
+<div class="about-page opt-f">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <p class="about-bio-lead">
+      [Your one-line positioning statement goes here — what you do, what you care about.]
+    </p>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+      <p>[Third paragraph — anything personal, where you're based, what else you're working on.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+    <div class="about-photo-bottom">
+      <div class="about-photo-bottom-img">
+        <img src="/images/headshot.jpg" alt="Nicole Seah" />
+      </div>
+      <div class="about-photo-bottom-text">Based in Singapore</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- OPTION G: F layout + B size -->
+<div class="option-label">Option G <span>— F's sign-off placement + B's 120px photo size</span></div>
+<div class="option-wrap">
+<div class="about-page opt-g">
+  <div class="about-header">
+    <span class="about-eyebrow">About</span>
+    <h1 class="about-name">Nicole Seah</h1>
+  </div>
+  <div class="about-body">
+    <p class="about-bio-lead">
+      [Your one-line positioning statement goes here — what you do, what you care about.]
+    </p>
+    <div class="about-bio-text">
+      <p>[Background paragraph — role, firm, focus area. What drew you to this work.]</p>
+      <p>[Second paragraph — what New Ontologies is and why you started it. The gap it fills.]</p>
+      <p>[Third paragraph — anything personal, where you're based, what else you're working on.]</p>
+    </div>
+    <div class="about-links">
+      <a href="#" class="about-link">Substack ↗</a>
+      <a href="#" class="about-link">LinkedIn ↗</a>
+      <a href="#" class="about-link">Email ↗</a>
+    </div>
+    <div class="about-photo-bottom">
+      <div class="about-photo-bottom-img">
+        <img src="/images/headshot.jpg" alt="Nicole Seah" />
+      </div>
+      <div class="about-photo-bottom-text">Based in Singapore</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div style="height: 4rem;"></div>
+</body>
+</html>

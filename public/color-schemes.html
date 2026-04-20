@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Ontologies — Color Picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --cream: #E3DFCE;
+  --blue:  #94B1C8;
+  --red:   #4C050C;
+  --dark:  #1A0905;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans:  'Inter Tight', -apple-system, sans-serif;
+  --max:   1000px;
+
+  /* live design tokens — defaults */
+  --c-bg:         #E3DFCE;
+  --c-hero-title: #E3DFCE;
+  --c-heading:    #1A0905;
+  --c-body:       rgba(26,9,5,0.55);
+  --c-accent:     #94B1C8;
+  --c-border:     rgba(26,9,5,0.1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 18px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--sans);
+  background: var(--c-bg);
+  color: var(--c-heading);
+  transition: background 0.35s, color 0.35s;
+}
+
+/* ══════════════════════════════════════
+   FLOATING COLOR PANEL
+   ══════════════════════════════════════ */
+.panel {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background: rgba(227,223,206,0.97);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(26,9,5,0.1);
+  border-radius: 10px;
+  padding: 1.1rem 1.1rem;
+  width: 180px;
+  box-shadow: 0 4px 24px rgba(26,9,5,0.1);
+}
+.panel-title {
+  font-size: 0.58rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(26,9,5,0.35); margin-bottom: 1rem;
+}
+.panel-row {
+  margin-bottom: 0.85rem;
+}
+.panel-row:last-child { margin-bottom: 0; }
+.panel-row-label {
+  font-size: 0.58rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: rgba(26,9,5,0.45); margin-bottom: 0.4rem;
+}
+.swatch-row { display: flex; gap: 0.35rem; }
+.swatch {
+  width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+  flex-shrink: 0; position: relative;
+}
+.swatch:hover { transform: scale(1.2); }
+.style-btn {
+  font-family: var(--sans); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.05em; background: rgba(26,9,5,0.06);
+  border: 1px solid transparent; border-radius: 3px;
+  color: rgba(26,9,5,0.45); padding: 0.25rem 0.45rem;
+  cursor: pointer; transition: all 0.15s;
+}
+.style-btn:hover { color: rgba(26,9,5,0.8); background: rgba(26,9,5,0.1); }
+.style-btn.active { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+.swatch.active::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(26,9,5,0.45);
+}
+.sw-cream { background: var(--cream); box-shadow: inset 0 0 0 1px rgba(26,9,5,0.15); }
+.sw-blue  { background: var(--blue); }
+.sw-red   { background: var(--red); }
+.sw-dark  { background: var(--dark); }
+
+
+/* ══════════════════════════════════════
+   DESIGN
+   ══════════════════════════════════════ */
+.nav {
+  max-width: var(--max); margin: 0 auto;
+  padding: 1.1rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 1.15rem;
+  color: var(--c-heading); text-decoration: none; letter-spacing: -0.02em;
+  transition: color 0.35s;
+}
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  font-size: 0.65rem; font-weight: 500;
+  color: var(--c-body);
+  text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em;
+  transition: color 0.35s;
+}
+.toggle {
+  background: none; border: 1px solid var(--c-border);
+  border-radius: 20px; width: 1.9rem; height: 1rem;
+  cursor: pointer; padding: 0; position: relative; transition: border-color 0.35s;
+}
+.toggle-dot {
+  display: block; width: 0.6rem; height: 0.6rem; border-radius: 50%;
+  background: var(--c-body);
+  position: absolute; top: 50%; left: 0.15rem; transform: translateY(-50%);
+  transition: background 0.35s;
+}
+
+.hero { position: relative; height: 320px; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-overlay { position: absolute; inset: 0; background: rgba(26,9,5,0.35); }
+.hero-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 2rem;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 400; line-height: 0.9; letter-spacing: -0.03em;
+  color: var(--c-hero-title);
+  transition: color 0.35s;
+}
+
+/* ── DEFINITION VARIANTS ── */
+.definition {
+  max-width: var(--max); margin: 0 auto;
+  border-bottom: 1px solid var(--c-border);
+  transition: border-color 0.35s, opacity 0.35s;
+}
+
+/* 1 — Same register as about: small label + text */
+.definition.def-1 {
+  padding: 1.25rem 2.5rem;
+  display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start;
+}
+.definition.def-1 .def-label {
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--c-body); white-space: nowrap;
+  padding-top: 0.15rem; transition: color 0.35s;
+}
+.definition.def-1 .def-text {
+  font-size: 0.78rem; color: var(--c-body); line-height: 1.75;
+  transition: color 0.35s;
+}
+.definition.def-1 .def-source {
+  font-size: 0.65rem; color: var(--c-body); opacity: 0.55;
+  margin-top: 0.35rem; display: block; transition: color 0.35s;
+}
+
+/* 2 — Muted footnote: very small, full width, de-emphasised */
+.definition.def-2 {
+  padding: 0.85rem 2.5rem;
+}
+.definition.def-2 .def-label { display: none; }
+.definition.def-2 .def-text {
+  font-size: 0.68rem; color: var(--c-body); opacity: 0.6;
+  line-height: 1.65; max-width: 680px; transition: color 0.35s;
+}
+.definition.def-2 .def-source {
+  font-size: 0.62rem; color: var(--c-body); opacity: 0.4;
+  margin-left: 0.5rem; transition: color 0.35s;
+}
+
+/* 3 — Epigraph: centered, italic serif, prominent */
+.definition.def-3 {
+  padding: 2rem 2.5rem;
+  text-align: center;
+}
+.definition.def-3 .def-label { display: none; }
+.definition.def-3 .def-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: var(--c-body); line-height: 1.6;
+  max-width: 620px; margin: 0 auto; transition: color 0.35s;
+}
+.definition.def-3 .def-source {
+  font-size: 0.62rem; color: var(--c-body); opacity: 0.5;
+  margin-top: 0.75rem; display: block;
+  text-transform: uppercase; letter-spacing: 0.07em; transition: color 0.35s;
+}
+
+/* 4 — Hidden */
+.definition.def-4 { display: none; }
+
+/* ── ABOUT VARIANTS ── */
+.about-strip {
+  max-width: var(--max); margin: 0 auto;
+  border-bottom: 1px solid var(--c-border);
+  transition: border-color 0.35s, opacity 0.35s;
+}
+.about-label {
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--c-body);
+  transition: color 0.35s;
+}
+.about-text {
+  font-size: 0.78rem; color: var(--c-body);
+  line-height: 1.75; transition: color 0.35s;
+}
+
+/* A — label stacked above short text (default) */
+.about-strip.style-a {
+  padding: 1.25rem 2.5rem;
+}
+.about-strip.style-a .about-label { display: block; margin-bottom: 0.4rem; }
+.about-strip.style-a .about-text  { max-width: 520px; }
+.about-strip.style-a .about-bold  { display: none; }
+.about-strip.style-a .about-quote { display: none; }
+
+/* B — centered italic standfirst, no label */
+.about-strip.style-b {
+  padding: 1.75rem 2.5rem;
+  text-align: center;
+}
+.about-strip.style-b .about-label { display: none; }
+.about-strip.style-b .about-bold  { display: none; }
+.about-strip.style-b .about-quote { display: none; }
+.about-strip.style-b .about-text  {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.05rem; line-height: 1.55;
+  max-width: 600px; margin: 0 auto; color: var(--c-body);
+}
+
+/* C — two-column: bold statement left, body text right */
+.about-strip.style-c {
+  padding: 1.75rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: start;
+}
+.about-strip.style-c .about-label { display: none; }
+.about-strip.style-c .about-quote { display: none; }
+.about-strip.style-c .about-bold {
+  display: block;
+  font-family: var(--serif); font-size: 1.35rem; font-weight: 400;
+  line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--c-heading); transition: color 0.35s;
+}
+.about-strip.style-c .about-text { max-width: none; font-size: 0.8rem; }
+
+/* D — pull quote: large centered serif with rules */
+.about-strip.style-d {
+  padding: 2.25rem 2.5rem;
+  text-align: center;
+}
+.about-strip.style-d .about-label { display: none; }
+.about-strip.style-d .about-text  { display: none; }
+.about-strip.style-d .about-bold  { display: none; }
+.about-strip.style-d .about-quote {
+  display: block;
+}
+.about-strip.style-d .about-quote-rule {
+  display: block; height: 1px;
+  background: var(--c-border); margin: 0 auto 1.25rem;
+  width: 40px; transition: background 0.35s;
+}
+.about-strip.style-d .about-quote-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  line-height: 1.35; letter-spacing: -0.01em;
+  color: var(--c-heading); max-width: 640px;
+  margin: 0 auto; transition: color 0.35s;
+}
+.about-strip.style-d .about-quote-rule-bottom {
+  display: block; height: 1px;
+  background: var(--c-border); margin: 1.25rem auto 0;
+  width: 40px; transition: background 0.35s;
+}
+
+/* E — hidden */
+.about-strip.style-e { display: none; }
+
+.posts { max-width: var(--max); margin: 0 auto; padding: 2rem 2.5rem 0; }
+
+.feat-card { display: block; text-decoration: none; cursor: pointer; border-bottom: 1px solid var(--c-border); padding-bottom: 1.5rem; transition: border-color 0.35s; }
+.feat-img { width: 100%; height: 260px; overflow: hidden; }
+.feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) brightness(0.95); transition: filter 0.5s; }
+.feat-card:hover .feat-img img { filter: grayscale(0) brightness(1); }
+.feat-body { padding: 0.9rem 0 0; display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
+.feat-title { font-family: var(--serif); font-size: 1.65rem; font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--c-heading); transition: color 0.35s; }
+.feat-card:hover .feat-title { color: var(--c-accent); }
+.feat-sub { font-size: 0.8rem; color: var(--c-body); line-height: 1.5; margin-top: 0.3rem; transition: color 0.35s; }
+.feat-meta { font-size: 0.63rem; font-weight: 500; color: var(--c-body); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; transition: color 0.35s; }
+
+.thumb-list { list-style: none; }
+.thumb-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 1.1rem; align-items: start; border-bottom: 1px solid var(--c-border); padding: 1.1rem 0; cursor: pointer; transition: border-color 0.35s; }
+.thumb-item:last-child { border-bottom: none; }
+.thumb-img { width: 90px; aspect-ratio: 4/3; overflow: hidden; }
+.thumb-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) brightness(0.95); transition: filter 0.5s; }
+.thumb-item:hover .thumb-img img { filter: grayscale(0) brightness(1); }
+.thumb-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--c-heading); transition: color 0.35s; }
+.thumb-item:hover .thumb-title { color: var(--c-accent); }
+.thumb-sub { font-size: 0.75rem; color: var(--c-body); line-height: 1.5; margin-top: 0.25rem; transition: color 0.35s; }
+.thumb-tag { display: inline-block; margin-top: 0.4rem; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--c-accent); border: 1px solid var(--c-accent); padding: 0.1em 0.4em; border-radius: 2px; transition: color 0.35s, border-color 0.35s; }
+.thumb-meta { font-size: 0.63rem; font-weight: 500; color: var(--c-body); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; transition: color 0.35s; }
+
+.foot { border-top: 1px solid var(--c-border); padding: 1.5rem 2.5rem; margin-top: 1rem; transition: border-color 0.35s; }
+.foot-inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--c-body); text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.35s; }
+.foot a { color: var(--c-body); text-decoration: none; }
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  .nav { padding: 1rem 1.25rem; }
+  .about-strip { padding: 1.25rem; flex-direction: column; gap: 0.4rem; }
+  .posts { padding: 1.5rem 1.25rem 0; }
+  .foot { padding: 1.25rem; }
+  .hero { height: 240px; }
+  .feat-img { height: 180px; }
+  .feat-body { grid-template-columns: 1fr; gap: 0.2rem; }
+  .feat-meta { order: -1; }
+  .thumb-item { grid-template-columns: 72px 1fr; gap: 0.85rem; }
+  .thumb-meta { display: none; }
+  .about-strip.style-c { grid-template-columns: 1fr; gap: 0.75rem; }
+  .panel {
+    top: auto; bottom: 1rem; right: 50%; transform: translateX(50%);
+    width: calc(100vw - 2rem); flex-direction: row;
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    padding: 0.85rem 1rem;
+  }
+  .panel-title { width: 100%; margin-bottom: 0.25rem; }
+  .panel-row { margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; }
+  .panel-row-label { margin-bottom: 0; white-space: nowrap; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- FLOATING PANEL -->
+<div class="panel">
+  <p class="panel-title">Colors</p>
+
+  <div class="panel-row">
+    <p class="panel-row-label">Definition</p>
+    <div class="swatch-row" style="gap:0.25rem;">
+      <button class="style-btn active" onclick="setDef('1')">1</button>
+      <button class="style-btn" onclick="setDef('2')">2</button>
+      <button class="style-btn" onclick="setDef('3')">3</button>
+      <button class="style-btn" onclick="setDef('4')">—</button>
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <p class="panel-row-label">About style</p>
+    <div class="swatch-row" style="gap:0.25rem;">
+      <button class="style-btn active" onclick="setAbout('a')">A</button>
+      <button class="style-btn" onclick="setAbout('b')">B</button>
+      <button class="style-btn" onclick="setAbout('c')">C</button>
+      <button class="style-btn" onclick="setAbout('d')">D</button>
+      <button class="style-btn" onclick="setAbout('e')">—</button>
+    </div>
+  </div>
+  <hr style="border:none;border-top:1px solid rgba(26,9,5,0.08);margin:0.75rem 0;">
+
+  <div class="panel-row">
+    <p class="panel-row-label">Background</p>
+    <div class="swatch-row">
+      <div class="swatch sw-cream active" data-token="bg" data-value="#E3DFCE" onclick="set(this)"></div>
+      <div class="swatch sw-blue"         data-token="bg" data-value="#94B1C8" onclick="set(this)"></div>
+      <div class="swatch sw-red"          data-token="bg" data-value="#4C050C" onclick="set(this)"></div>
+      <div class="swatch sw-dark"         data-token="bg" data-value="#1A0905" onclick="set(this)"></div>
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <p class="panel-row-label">Hero title</p>
+    <div class="swatch-row">
+      <div class="swatch sw-cream active" data-token="hero-title" data-value="#E3DFCE" onclick="set(this)"></div>
+      <div class="swatch sw-blue"         data-token="hero-title" data-value="#94B1C8" onclick="set(this)"></div>
+      <div class="swatch sw-red"          data-token="hero-title" data-value="#4C050C" onclick="set(this)"></div>
+      <div class="swatch sw-dark"         data-token="hero-title" data-value="#1A0905" onclick="set(this)"></div>
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <p class="panel-row-label">Headings</p>
+    <div class="swatch-row">
+      <div class="swatch sw-cream"        data-token="heading" data-value="#E3DFCE" onclick="set(this)"></div>
+      <div class="swatch sw-blue"         data-token="heading" data-value="#94B1C8" onclick="set(this)"></div>
+      <div class="swatch sw-red"          data-token="heading" data-value="#4C050C" onclick="set(this)"></div>
+      <div class="swatch sw-dark active"  data-token="heading" data-value="#1A0905" onclick="set(this)"></div>
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <p class="panel-row-label">Body text</p>
+    <div class="swatch-row">
+      <div class="swatch sw-cream"        data-token="body" data-value="rgba(227,223,206,0.65)" onclick="set(this)"></div>
+      <div class="swatch sw-blue"         data-token="body" data-value="rgba(148,177,200,0.8)"  onclick="set(this)"></div>
+      <div class="swatch sw-red"          data-token="body" data-value="rgba(76,5,12,0.6)"      onclick="set(this)"></div>
+      <div class="swatch sw-dark active"  data-token="body" data-value="rgba(26,9,5,0.55)"      onclick="set(this)"></div>
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <p class="panel-row-label">Accent</p>
+    <div class="swatch-row">
+      <div class="swatch sw-cream"        data-token="accent" data-value="#E3DFCE" onclick="set(this)"></div>
+      <div class="swatch sw-blue active"  data-token="accent" data-value="#94B1C8" onclick="set(this)"></div>
+      <div class="swatch sw-red"          data-token="accent" data-value="#4C050C" onclick="set(this)"></div>
+      <div class="swatch sw-dark"         data-token="accent" data-value="#1A0905" onclick="set(this)"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="#">New Ontologies</a>
+  <div class="nav-links">
+    <a href="#">Archive</a>
+    <a href="#">About</a>
+    <button class="toggle"><span class="toggle-dot"></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"><img src="/images/halftone-bridge.png" alt="Golden Gate Bridge"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h1 class="hero-title">New Ontologies</h1>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-strip style-a">
+  <span class="about-label">About</span>
+  <strong class="about-bold">How do we talk more ambitiously about the future?</strong>
+  <p class="about-text">Long-form field studies of the people and products reshaping cultural infrastructure.</p>
+  <span class="about-quote">
+    <span class="about-quote-rule"></span>
+    <span class="about-quote-text">"We enter a poem and leave it having been changed. Language shapes who we are, and who we can become."</span>
+    <span class="about-quote-rule-bottom"></span>
+  </span>
+</div>
+
+<!-- POSTS -->
+<div class="posts">
+  <a class="feat-card" href="#">
+    <div class="feat-img"><img src="/images/teampic.jpg" alt=""></div>
+    <div class="feat-body">
+      <div>
+        <h2 class="feat-title">New Ontologies: Ando</h2>
+        <p class="feat-sub">Inside Ando — how a new generation of builders thinks about work</p>
+      </div>
+      <span class="feat-meta">Feb 2026</span>
+    </div>
+  </a>
+  <ul class="thumb-list">
+    <li class="thumb-item">
+      <div class="thumb-img"><img src="/images/sara_bw.jpg" alt=""></div>
+      <div>
+        <h2 class="thumb-title">The Language of Future Companies</h2>
+        <p class="thumb-sub">How founders create worlds before they exist</p>
+        <span class="thumb-tag">language & culture</span>
+      </div>
+      <span class="thumb-meta">Jan 2026</span>
+    </li>
+    <li class="thumb-item">
+      <div class="thumb-img"><img src="/images/bw.jpg" alt=""></div>
+      <div>
+        <h2 class="thumb-title">On Building in Public</h2>
+        <p class="thumb-sub">Transparency as a philosophical stance, not a strategy</p>
+      </div>
+      <span class="thumb-meta">Dec 2025</span>
+    </li>
+  </ul>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>© 2026 New Ontologies</span>
+    <a href="#">About</a>
+  </div>
+</footer>
+
+<script>
+const KEY = 'no-colors';
+
+function setDef(style) {
+  document.querySelector('.definition').className = 'definition def-' + style;
+  document.querySelectorAll('.panel-row').forEach(row => {
+    if (row.querySelector('.panel-row-label')?.textContent === 'Definition') {
+      row.querySelectorAll('.style-btn').forEach((b, i) => {
+        b.classList.toggle('active', b.textContent.trim() === style || (style === '4' && b.textContent.trim() === '—'));
+      });
+    }
+  });
+  const state = JSON.parse(localStorage.getItem(KEY) || '[]');
+  localStorage.setItem(KEY, JSON.stringify([...state.filter(s => s.token !== 'def-style'), { token: 'def-style', value: style }]));
+}
+
+function setAbout(style) {
+  const strip = document.querySelector('.about-strip');
+  strip.className = 'about-strip style-' + style;
+  document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.style-btn').forEach(b => {
+    if (b.textContent.trim().toLowerCase() === style || (style === 'e' && b.textContent.trim() === '—')) b.classList.add('active');
+  });
+  const state = JSON.parse(localStorage.getItem(KEY) || '[]');
+  const filtered = state.filter(s => s.token !== 'about-style');
+  filtered.push({ token: 'about-style', value: style });
+  localStorage.setItem(KEY, JSON.stringify(filtered));
+}
+
+function set(el) {
+  const token = el.dataset.token;
+  const value = el.dataset.value;
+  document.documentElement.style.setProperty('--c-' + token, value);
+  el.closest('.swatch-row').querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  if (token === 'bg') {
+    const dark = value === '#4C050C' || value === '#1A0905';
+    document.documentElement.style.setProperty('--c-border',
+      dark ? 'rgba(227,223,206,0.12)' : 'rgba(26,9,5,0.1)');
+  }
+  const state = [...document.querySelectorAll('.swatch.active')].map(s => ({
+    token: s.dataset.token, value: s.dataset.value
+  }));
+  localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+(function restore() {
+  try {
+    const state = JSON.parse(localStorage.getItem(KEY));
+    if (!state) return;
+    state.forEach(({ token, value }) => {
+      document.documentElement.style.setProperty('--c-' + token, value);
+      const el = document.querySelector(`[data-token="${token}"][data-value='${value}']`);
+      if (el) {
+        el.closest('.swatch-row').querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        el.classList.add('active');
+      }
+      if (token === 'bg') {
+        const dark = value === '#4C050C' || value === '#1A0905';
+        document.documentElement.style.setProperty('--c-border',
+          dark ? 'rgba(227,223,206,0.12)' : 'rgba(26,9,5,0.1)');
+      }
+      if (token === 'def-style')   setDef(value);
+      if (token === 'about-style') setAbout(value);
+    });
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>

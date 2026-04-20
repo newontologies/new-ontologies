@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accent Options — New Ontologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #1A0905;
+    --cream: #E3DFCE;
+    --blue: #94B1C8;
+    --blue-light: #C8D9E4;
+    --blue-faint: #E8EFF4;
+    --blue-deep: #6A90AB;
+    --gray-400: #A88878;
+    --gray-500: #8A6050;
+    --border: #C8B0A4;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter Tight', sans-serif;
+  }
+  body { background: #ECEAE3; font-family: var(--font-body); color: var(--black); padding: 2rem; }
+
+  .switcher { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .switcher button {
+    font-family: var(--font-body); font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; padding: 0.4em 1em;
+    border: 1px solid var(--border); border-radius: 2px; background: white;
+    color: var(--gray-500); cursor: pointer; transition: all 0.15s;
+  }
+  .switcher button.active, .switcher button:hover {
+    background: var(--black); color: var(--cream); border-color: var(--black);
+  }
+  .option { display: none; }
+  .option.active { display: block; }
+
+  .site { background: var(--cream); max-width: 1100px; margin: 0 auto; border: 1px solid var(--border); overflow: hidden; }
+
+  /* Nav — same throughout */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .logo { font-family: var(--font-display); font-size: 3rem; color: var(--black); text-decoration: none; letter-spacing: -0.03em; line-height: 0.9; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-500); text-decoration: none; }
+
+  /* Hero — same throughout */
+  .hero { position: relative; height: 280px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(26,9,5,0.32); }
+
+  /* Posts */
+  .posts { padding: 0 2.5rem 2rem; }
+  .feat-card { display: block; text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1.2rem; margin-top: 1.5rem; }
+  .feat-img-wrap { width: 100%; height: 200px; overflow: hidden; }
+  .feat-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.9); transition: filter 0.5s; }
+  .feat-card:hover .feat-img-wrap img { filter: grayscale(0) brightness(1); }
+  .feat-body { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding-top: 0.8rem; align-items: start; }
+  .feat-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--black); letter-spacing: -0.02em; line-height: 1.15; }
+  .feat-sub { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.2rem; line-height: 1.5; }
+  .feat-meta { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-400); white-space: nowrap; }
+
+  /* ══ 1 — Blue left border rule on the question ══ */
+  .acc-1 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .acc-1-q { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; color: var(--black); border-left: 2.5px solid var(--blue); padding-left: 1.25rem; }
+  .acc-1-desc { font-size: 0.75rem; color: var(--gray-500); line-height: 1.75; align-self: center; }
+
+  /* ══ 2 — Blue as the question text colour ══ */
+  .acc-2 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .acc-2-q { font-family: var(--font-display); font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em; color: var(--blue); max-width: 780px; }
+  .acc-2-desc { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); margin-top: 0.9rem; }
+
+  /* ══ 3 — Blue faint wash behind the strip ══ */
+  .acc-3 { background: var(--blue-faint); padding: 2rem 2.5rem; border-bottom: 1px solid var(--blue-light); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .acc-3-q { font-family: var(--font-display); font-size: clamp(1.4rem, 2.2vw, 2rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--black); }
+  .acc-3-desc { font-size: 0.75rem; color: var(--gray-500); line-height: 1.75; }
+
+  /* ══ 4 — One key word highlighted in blue ══ */
+  .acc-4 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .acc-4-q { font-family: var(--font-display); font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.03em; color: var(--black); max-width: 760px; }
+  .acc-4-q em { color: var(--blue); font-style: normal; }
+  .acc-4-desc { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); margin-top: 0.9rem; }
+
+  /* ══ 5 — Blue top stripe (thin) above the section ══ */
+  .acc-5-stripe { height: 3px; background: var(--blue); }
+  .acc-5 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .acc-5-q { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; color: var(--black); }
+  .acc-5-desc { font-size: 0.75rem; color: var(--gray-500); line-height: 1.75; align-self: center; }
+
+  /* ══ 6 — Blue huge decorative drop letter ══ */
+  .acc-6 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: flex; gap: 1.5rem; align-items: flex-start; }
+  .acc-6-drop { font-family: var(--font-display); font-size: 6rem; line-height: 0.8; color: var(--blue); letter-spacing: -0.05em; flex-shrink: 0; opacity: 0.55; margin-top: 0.1rem; }
+  .acc-6-right { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+  .acc-6-q { font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.8rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--black); }
+  .acc-6-desc { font-size: 0.72rem; color: var(--gray-500); line-height: 1.7; max-width: 440px; }
+
+  /* ══ 7 — Blue used as nav accent, subtle presence throughout ══ */
+  .acc-7-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .acc-7-logo { font-family: var(--font-display); font-size: 3rem; color: var(--black); text-decoration: none; letter-spacing: -0.03em; line-height: 0.9; }
+  .acc-7-links { display: flex; gap: 1.5rem; align-items: center; }
+  .acc-7-links a { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); text-decoration: none; }
+  .acc-7 { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .acc-7-q { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; color: var(--black); }
+  .acc-7-desc { font-size: 0.75rem; color: var(--gray-500); line-height: 1.75; align-self: center; }
+
+  /* ══ 8 — Three pillar columns, blue label and top rule per col ══ */
+  .acc-8 { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .acc-8-col { padding: 1.5rem 2rem; border-right: 1px solid var(--border); border-top: 2.5px solid var(--blue); }
+  .acc-8-col:first-child { border-top-color: var(--blue); }
+  .acc-8-col:nth-child(2) { border-top-color: var(--blue-light); }
+  .acc-8-col:last-child { border-right: none; border-top-color: #d6e4ed; }
+  .acc-8-label { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 0.4rem; }
+  .acc-8-text { font-family: var(--font-display); font-size: 0.98rem; line-height: 1.35; letter-spacing: -0.01em; color: var(--black); }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <button class="active" onclick="show(1)">1 — Blue left rule</button>
+  <button onclick="show(2)">2 — Blue question text</button>
+  <button onclick="show(3)">3 — Blue wash bg</button>
+  <button onclick="show(4)">4 — One word in blue</button>
+  <button onclick="show(5)">5 — Blue top stripe</button>
+  <button onclick="show(6)">6 — Blue drop letter</button>
+  <button onclick="show(7)">7 — Blue in nav links</button>
+  <button onclick="show(8)">8 — Blue column rules</button>
+</div>
+
+<template id="hero-tpl">
+  <div class="hero">
+    <img src="/images/halftone-bridge.png" alt="" />
+    <div class="hero-overlay"></div>
+  </div>
+</template>
+<template id="posts-tpl">
+  <div class="posts">
+    <a class="feat-card" href="#">
+      <div class="feat-img-wrap"><img src="/images/teampic.jpg" alt="" /></div>
+      <div class="feat-body">
+        <div>
+          <div class="feat-title">New Ontologies: Ando</div>
+          <div class="feat-sub">Inside Ando — building the scaffolding for a new communication layer between agents and humans.</div>
+        </div>
+        <div class="feat-meta">Feb 2026</div>
+      </div>
+    </a>
+  </div>
+</template>
+
+<div class="option active" id="opt1"><div class="site"></div></div>
+<div class="option" id="opt2"><div class="site"></div></div>
+<div class="option" id="opt3"><div class="site"></div></div>
+<div class="option" id="opt4"><div class="site"></div></div>
+<div class="option" id="opt5"><div class="site"></div></div>
+<div class="option" id="opt6"><div class="site"></div></div>
+<div class="option" id="opt7"><div class="site"></div></div>
+<div class="option" id="opt8"><div class="site"></div></div>
+
+<script>
+  const q = 'How do we talk more ambitiously about the future?';
+  const desc = 'Long-form field studies of the people and products reshaping cultural infrastructure.';
+
+  const navHTML = `<header class="nav">
+    <a href="#" class="logo">New Ontologies</a>
+    <nav class="nav-links"><a href="#">Archive</a><a href="#">About</a></nav>
+  </header>`;
+
+  const midHTML = {
+    1: `<div class="acc-1">
+          <p class="acc-1-q">${q}</p>
+          <p class="acc-1-desc">${desc}</p>
+        </div>`,
+    2: `<div class="acc-2">
+          <p class="acc-2-q">${q}</p>
+          <p class="acc-2-desc">${desc}</p>
+        </div>`,
+    3: `<div class="acc-3">
+          <p class="acc-3-q">${q}</p>
+          <p class="acc-3-desc">${desc}</p>
+        </div>`,
+    4: `<div class="acc-4">
+          <p class="acc-4-q">How do we talk more <em>ambitiously</em> about the future?</p>
+          <p class="acc-4-desc">${desc}</p>
+        </div>`,
+    5: `<div class="acc-5-stripe"></div>
+        <div class="acc-5">
+          <p class="acc-5-q">${q}</p>
+          <p class="acc-5-desc">${desc}</p>
+        </div>`,
+    6: `<div class="acc-6">
+          <span class="acc-6-drop">H</span>
+          <div class="acc-6-right">
+            <p class="acc-6-q">${q}</p>
+            <p class="acc-6-desc">${desc}</p>
+          </div>
+        </div>`,
+    7: `<header class="acc-7-nav">
+          <a href="#" class="acc-7-logo">New Ontologies</a>
+          <nav class="acc-7-links"><a href="#">Archive</a><a href="#">About</a></nav>
+        </header>
+        <div class="acc-7">
+          <p class="acc-7-q">${q}</p>
+          <p class="acc-7-desc">${desc}</p>
+        </div>`,
+    8: `<div class="acc-8">
+          <div class="acc-8-col">
+            <div class="acc-8-label">The question</div>
+            <p class="acc-8-text">How do we talk more ambitiously about the future?</p>
+          </div>
+          <div class="acc-8-col">
+            <div class="acc-8-label">The work</div>
+            <p class="acc-8-text">Long-form field studies of consequential companies and founders.</p>
+          </div>
+          <div class="acc-8-col">
+            <div class="acc-8-label">The form</div>
+            <p class="acc-8-text">First entry points into new, rich intellectual worlds.</p>
+          </div>
+        </div>`,
+  };
+
+  function build(n) {
+    const site = document.querySelector(`#opt${n} .site`);
+    const hero = document.getElementById('hero-tpl').content.cloneNode(true);
+    const posts = document.getElementById('posts-tpl').content.cloneNode(true);
+    site.innerHTML = '';
+    // Option 7 has its own nav built into midHTML
+    if (n !== 7) site.insertAdjacentHTML('beforeend', navHTML);
+    site.appendChild(hero);
+    site.insertAdjacentHTML('beforeend', midHTML[n]);
+    site.appendChild(posts);
+  }
+
+  function show(n) {
+    document.querySelectorAll('.option').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.switcher button').forEach(el => el.classList.remove('active'));
+    document.getElementById('opt' + n).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  [1,2,3,4,5,6,7,8].forEach(build);
+</script>
+</body>
+</html>

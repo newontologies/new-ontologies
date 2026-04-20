@@ -10,6 +10,25 @@ import Base from '../layouts/Base.astro';
     </div>
 
     <div class="about-body">
+
+      <div class="about-content">
+        <p class="about-lead">Independent field studies of ambitious early stage companies from a product-centric, deeply personal lens.</p>
+
+        <p class="about-text">Ontology: <a href="https://en.wikipedia.org/wiki/Ancient_Greek" target="_blank" rel="noopener">ancient Greek</a> terms ὄντως (<em>ontos</em>, meaning 'being') and λογία (<em>logia</em>, meaning 'study of')</p>
+
+        <p class="about-text">New companies produce new ontologies — conceptual frames — that serve as entry points to rich intellectual worlds. This moment is an incredibly fruitful time to be documenting and recording the shapes of companies being built.</p>
+
+        <p class="about-text">Here are some of my governing principles:</p>
+
+        <ul class="about-principles">
+          <li>Granularity and hyper-specificity.</li>
+          <li>Technical fluency and poetic sensibility.</li>
+          <li>High trust and attention.</li>
+          <li>Worldbuilding requires legibility.</li>
+          <li>Free agent.</li>
+        </ul>
+      </div>
+
       <div class="about-links">
         <a href="https://www.startingfromnix.com/" class="about-link" target="_blank" rel="noopener">
           Substack
@@ -69,6 +88,47 @@ import Base from '../layouts/Base.astro';
 
   .about-body {
     padding-top: 2.5rem;
+  }
+
+  .about-content {
+    margin-bottom: 2.5rem;
+  }
+
+  .about-lead {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    margin-bottom: 1.75rem;
+  }
+
+  .about-text {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--black);
+    line-height: 1.8;
+    margin-bottom: 1.1rem;
+  }
+
+  .about-text a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .about-principles {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--black);
+    line-height: 1.8;
+    padding-left: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .about-principles li {
+    margin-bottom: 0.25rem;
   }
 
   .about-photo-bottom {

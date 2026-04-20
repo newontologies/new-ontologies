@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage Concepts — Hilma af Klint</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400;1,7..72,500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* === SWITCHER === */
+  .switcher {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #1a1a2e;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .switcher-label {
+    color: #eee;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
+
+  .switcher button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #eee;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.4em 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .switcher button:hover { border-color: #eee; }
+  .switcher button.active {
+    background: #eee;
+    color: #1a1a2e;
+    border-color: #eee;
+  }
+
+  /* === CONCEPT CONTAINERS === */
+  .concept { display: none; }
+  .concept.active { display: block; }
+
+  /* ================================================
+     CONCEPT A — Lavender Field
+     Soft lavender bg, overlapping circles as hero,
+     golden accent, organic shapes
+     ================================================ */
+  .c-a {
+    background: #E8E0EE;
+    min-height: 100vh;
+  }
+
+  .c-a .nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-a .logo {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    color: #2A1E3A;
+    letter-spacing: -0.02em;
+  }
+
+  .c-a .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #2A1E3A;
+  }
+
+  .c-a .hero {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hilma-inspired overlapping circles */
+  .c-a .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .c-a .c1 { width: 500px; height: 500px; background: #D4A843; top: -80px; left: 10%; opacity: 0.35; }
+  .c-a .c2 { width: 380px; height: 380px; background: #C8788A; top: 60px; right: 15%; opacity: 0.3; }
+  .c-a .c3 { width: 280px; height: 280px; background: #5B7B9A; bottom: -40px; left: 30%; opacity: 0.3; }
+  .c-a .c4 { width: 180px; height: 180px; background: #6B9B6B; top: 40px; left: 50%; opacity: 0.35; }
+  .c-a .c5 { width: 120px; height: 120px; background: #E8A04C; bottom: 60px; right: 25%; opacity: 0.4; }
+
+  .c-a .hero-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .c-a .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #2A1E3A;
+    margin-bottom: 1.25rem;
+  }
+
+  .c-a .hero-sub {
+    font-size: 0.85rem;
+    color: #5A4A6A;
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .c-a .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .c-a .divider {
+    border: none;
+    height: 1px;
+    background: #C8B8D4;
+  }
+
+  .c-a .feat {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #C8B8D4;
+  }
+
+  .c-a .feat-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8A6AA0;
+    margin-bottom: 0.75rem;
+  }
+
+  .c-a .feat-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #2A1E3A;
+    margin-bottom: 0.4rem;
+  }
+
+  .c-a .feat-sub {
+    font-size: 0.82rem;
+    color: #5A4A6A;
+    line-height: 1.5;
+  }
+
+  .c-a .feat-date {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #8A6AA0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.6rem;
+  }
+
+  /* ================================================
+     CONCEPT B — Deep Blue Canvas
+     Dark blue bg (from painting 2), cream/pink text,
+     golden circular motif
+     ================================================ */
+  .c-b {
+    background: #2A3F5A;
+    min-height: 100vh;
+  }
+
+  .c-b .nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-b .logo {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    color: #F0E8DC;
+    letter-spacing: -0.02em;
+  }
+
+  .c-b .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #F0E8DC;
+  }
+
+  .c-b .hero {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Floral wreath-inspired rings */
+  .c-b .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid;
+    opacity: 0.25;
+  }
+
+  .c-b .r1 { width: 600px; height: 600px; border-color: #F0E8DC; top: -100px; left: -100px; }
+  .c-b .r2 { width: 400px; height: 400px; border-color: #D4887A; top: 20px; right: -50px; }
+  .c-b .r3 { width: 200px; height: 200px; border-color: #D4A843; bottom: 40px; left: 20%; background: rgba(212,168,67,0.08); }
+
+  .c-b .petal {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .c-b .p1 { width: 90px; height: 90px; background: rgba(212,136,122,0.2); top: 80px; right: 20%; }
+  .c-b .p2 { width: 60px; height: 60px; background: rgba(240,232,220,0.12); bottom: 120px; left: 15%; }
+  .c-b .p3 { width: 45px; height: 45px; background: rgba(212,168,67,0.2); top: 200px; left: 10%; }
+  .c-b .p4 { width: 70px; height: 70px; background: rgba(212,136,122,0.15); bottom: 60px; right: 30%; }
+
+  .c-b .hero-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .c-b .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #F0E8DC;
+    margin-bottom: 1.25rem;
+  }
+
+  .c-b .hero-sub {
+    font-size: 0.85rem;
+    color: #A8B8C8;
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .c-b .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .c-b .feat {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #3A5570;
+  }
+
+  .c-b .feat-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #D4A843;
+    margin-bottom: 0.75rem;
+  }
+
+  .c-b .feat-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #F0E8DC;
+    margin-bottom: 0.4rem;
+  }
+
+  .c-b .feat-sub {
+    font-size: 0.82rem;
+    color: #A8B8C8;
+    line-height: 1.5;
+  }
+
+  .c-b .feat-date {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #7A8A9A;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.6rem;
+  }
+
+  /* ================================================
+     CONCEPT C — Soft Blue Sky
+     Painting 3 palette: powder blue bg, pink/orange
+     warm accents, playful overlapping forms
+     ================================================ */
+  .c-c {
+    background: #C8D8E8;
+    min-height: 100vh;
+  }
+
+  .c-c .nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-c .logo {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    color: #2A3448;
+    letter-spacing: -0.02em;
+  }
+
+  .c-c .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #2A3448;
+  }
+
+  .c-c .hero {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Overlapping circles from painting 3 */
+  .c-c .blob {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .c-c .b1 { width: 420px; height: 420px; background: #D88A78; bottom: -80px; left: 5%; opacity: 0.35; }
+  .c-c .b2 { width: 350px; height: 350px; background: #E8A858; bottom: -60px; right: 10%; opacity: 0.3; }
+  .c-c .b3 { width: 300px; height: 300px; background: #E0B0C0; top: 20px; left: 15%; opacity: 0.3; }
+  .c-c .b4 { width: 180px; height: 180px; background: #5B7B9A; top: 60px; right: 20%; opacity: 0.3; }
+  .c-c .b5 { width: 140px; height: 140px; background: #D4A843; top: 180px; left: 45%; opacity: 0.25; }
+  .c-c .b6 { width: 100px; height: 100px; background: #F0E8DC; top: 40px; left: 5%; opacity: 0.5; }
+
+  .c-c .hero-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .c-c .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #2A3448;
+    margin-bottom: 1.25rem;
+  }
+
+  .c-c .hero-sub {
+    font-size: 0.85rem;
+    color: #4A5A6A;
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .c-c .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .c-c .feat {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #A8BACA;
+  }
+
+  .c-c .feat-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #D88A78;
+    margin-bottom: 0.75rem;
+  }
+
+  .c-c .feat-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #2A3448;
+    margin-bottom: 0.4rem;
+  }
+
+  .c-c .feat-sub {
+    font-size: 0.82rem;
+    color: #4A5A6A;
+    line-height: 1.5;
+  }
+
+  .c-c .feat-date {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #7A8A9A;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.6rem;
+  }
+
+  /* ================================================
+     CONCEPT D — Warm Cream (current site bg)
+     Keeps your warm cream but adds Hilma-inspired
+     organic shapes as a subtle hero motif
+     ================================================ */
+  .c-d {
+    background: #F5F0E8;
+    min-height: 100vh;
+  }
+
+  .c-d .nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-d .logo {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.3rem;
+    color: #1C1410;
+    letter-spacing: -0.02em;
+  }
+
+  .c-d .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1C1410;
+  }
+
+  .c-d .hero {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-d .shape {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .c-d .s1 { width: 380px; height: 380px; background: rgba(106,155,192,0.15); top: -40px; right: -60px; }
+  .c-d .s2 { width: 280px; height: 280px; background: rgba(200,120,138,0.12); bottom: 0; left: 5%; }
+  .c-d .s3 { width: 200px; height: 200px; background: rgba(212,168,67,0.12); top: 80px; left: 25%; }
+  .c-d .s4 { width: 150px; height: 150px; background: rgba(91,123,154,0.1); bottom: 60px; right: 25%; }
+  .c-d .s5 { width: 100px; height: 100px; background: rgba(107,155,107,0.1); top: 20px; left: 8%; }
+
+  .c-d .hero-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .c-d .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #1C1410;
+    margin-bottom: 1.25rem;
+  }
+
+  .c-d .hero-sub {
+    font-size: 0.85rem;
+    color: #4A3828;
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .c-d .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .c-d .feat {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #D8D0C4;
+  }
+
+  .c-d .feat-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6A9BC0;
+    margin-bottom: 0.75rem;
+  }
+
+  .c-d .feat-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #1C1410;
+    margin-bottom: 0.4rem;
+  }
+
+  .c-d .feat-sub {
+    font-size: 0.82rem;
+    color: #4A3828;
+    line-height: 1.5;
+  }
+
+  .c-d .feat-date {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #9A8878;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.6rem;
+  }
+
+  /* === Slow drift animation for all concepts === */
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(12px, -8px); }
+  }
+
+  @keyframes drift-alt {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, 12px); }
+  }
+
+  @keyframes drift-slow {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(8px, 10px); }
+  }
+
+  .drift-1 { animation: drift 12s ease-in-out infinite; }
+  .drift-2 { animation: drift-alt 15s ease-in-out infinite; }
+  .drift-3 { animation: drift-slow 18s ease-in-out infinite; }
+  .drift-4 { animation: drift 20s ease-in-out infinite; }
+  .drift-5 { animation: drift-alt 14s ease-in-out infinite; }
+  .drift-6 { animation: drift-slow 16s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <span class="switcher-label">Concept</span>
+  <button class="active" data-concept="a">A · Lavender Field</button>
+  <button data-concept="b">B · Deep Blue Canvas</button>
+  <button data-concept="c">C · Soft Blue Sky</button>
+  <button data-concept="d">D · Warm Cream + Shapes</button>
+</div>
+
+<!-- CONCEPT A — Lavender Field -->
+<div class="concept c-a active" id="concept-a">
+  <nav class="nav">
+    <span class="logo">New Ontologies</span>
+    <div class="nav-links"><span>Archive</span><span>About</span></div>
+  </nav>
+  <div class="hero">
+    <div class="circle c1 drift-1"></div>
+    <div class="circle c2 drift-2"></div>
+    <div class="circle c3 drift-3"></div>
+    <div class="circle c4 drift-4"></div>
+    <div class="circle c5 drift-5"></div>
+    <div class="hero-text">
+      <h1 class="hero-title">How do we talk more ambitiously about the future?</h1>
+      <p class="hero-sub">Long-form field studies of founders and early stage teams</p>
+    </div>
+  </div>
+  <div class="content">
+    <hr class="divider">
+    <div class="feat">
+      <div class="feat-tag">company building</div>
+      <h2 class="feat-title">New Ontologies of Companies</h2>
+      <p class="feat-sub">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+      <div class="feat-date">Feb 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">product</div>
+      <h2 class="feat-title">The Shape of the Product</h2>
+      <p class="feat-sub">What happens when every surface of a company reinforces the same set of ideas</p>
+      <div class="feat-date">Jan 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">founders</div>
+      <h2 class="feat-title">Building the World Inside the Product</h2>
+      <p class="feat-sub">A field study of Ando and the art of coherent design</p>
+      <div class="feat-date">Dec 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT B — Deep Blue Canvas -->
+<div class="concept c-b" id="concept-b">
+  <nav class="nav">
+    <span class="logo">New Ontologies</span>
+    <div class="nav-links"><span>Archive</span><span>About</span></div>
+  </nav>
+  <div class="hero">
+    <div class="ring r1 drift-3"></div>
+    <div class="ring r2 drift-1"></div>
+    <div class="ring r3 drift-2"></div>
+    <div class="petal p1 drift-4"></div>
+    <div class="petal p2 drift-5"></div>
+    <div class="petal p3 drift-2"></div>
+    <div class="petal p4 drift-6"></div>
+    <div class="hero-text">
+      <h1 class="hero-title">How do we talk more ambitiously about the future?</h1>
+      <p class="hero-sub">Long-form field studies of founders and early stage teams</p>
+    </div>
+  </div>
+  <div class="content">
+    <div class="feat">
+      <div class="feat-tag">company building</div>
+      <h2 class="feat-title">New Ontologies of Companies</h2>
+      <p class="feat-sub">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+      <div class="feat-date">Feb 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">product</div>
+      <h2 class="feat-title">The Shape of the Product</h2>
+      <p class="feat-sub">What happens when every surface of a company reinforces the same set of ideas</p>
+      <div class="feat-date">Jan 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">founders</div>
+      <h2 class="feat-title">Building the World Inside the Product</h2>
+      <p class="feat-sub">A field study of Ando and the art of coherent design</p>
+      <div class="feat-date">Dec 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT C — Soft Blue Sky -->
+<div class="concept c-c" id="concept-c">
+  <nav class="nav">
+    <span class="logo">New Ontologies</span>
+    <div class="nav-links"><span>Archive</span><span>About</span></div>
+  </nav>
+  <div class="hero">
+    <div class="blob b1 drift-2"></div>
+    <div class="blob b2 drift-4"></div>
+    <div class="blob b3 drift-1"></div>
+    <div class="blob b4 drift-3"></div>
+    <div class="blob b5 drift-5"></div>
+    <div class="blob b6 drift-6"></div>
+    <div class="hero-text">
+      <h1 class="hero-title">How do we talk more ambitiously about the future?</h1>
+      <p class="hero-sub">Long-form field studies of founders and early stage teams</p>
+    </div>
+  </div>
+  <div class="content">
+    <div class="feat">
+      <div class="feat-tag">company building</div>
+      <h2 class="feat-title">New Ontologies of Companies</h2>
+      <p class="feat-sub">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+      <div class="feat-date">Feb 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">product</div>
+      <h2 class="feat-title">The Shape of the Product</h2>
+      <p class="feat-sub">What happens when every surface of a company reinforces the same set of ideas</p>
+      <div class="feat-date">Jan 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">founders</div>
+      <h2 class="feat-title">Building the World Inside the Product</h2>
+      <p class="feat-sub">A field study of Ando and the art of coherent design</p>
+      <div class="feat-date">Dec 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT D — Warm Cream + Shapes -->
+<div class="concept c-d" id="concept-d">
+  <nav class="nav">
+    <span class="logo">New Ontologies</span>
+    <div class="nav-links"><span>Archive</span><span>About</span></div>
+  </nav>
+  <div class="hero">
+    <div class="shape s1 drift-1"></div>
+    <div class="shape s2 drift-2"></div>
+    <div class="shape s3 drift-3"></div>
+    <div class="shape s4 drift-4"></div>
+    <div class="shape s5 drift-5"></div>
+    <div class="hero-text">
+      <h1 class="hero-title">How do we talk more ambitiously about the future?</h1>
+      <p class="hero-sub">Long-form field studies of founders and early stage teams</p>
+    </div>
+  </div>
+  <div class="content">
+    <div class="feat">
+      <div class="feat-tag">company building</div>
+      <h2 class="feat-title">New Ontologies of Companies</h2>
+      <p class="feat-sub">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+      <div class="feat-date">Feb 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">product</div>
+      <h2 class="feat-title">The Shape of the Product</h2>
+      <p class="feat-sub">What happens when every surface of a company reinforces the same set of ideas</p>
+      <div class="feat-date">Jan 2026</div>
+    </div>
+    <div class="feat">
+      <div class="feat-tag">founders</div>
+      <h2 class="feat-title">Building the World Inside the Product</h2>
+      <p class="feat-sub">A field study of Ando and the art of coherent design</p>
+      <div class="feat-date">Dec 2025</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.switcher button');
+  const concepts = document.querySelectorAll('.concept');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      concepts.forEach(c => c.classList.remove('active'));
+      document.getElementById('concept-' + btn.dataset.concept).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

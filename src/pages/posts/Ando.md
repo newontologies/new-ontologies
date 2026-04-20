@@ -1,15 +1,13 @@
 ---
 layout: ../../layouts/Post.astro
-title: "New Ontologies: Ando"
-subtitle: "Inside Ando"
+title: "Ando: AI-Native Slack"
+subtitle: "Building work messaging from scratch"
 date: 2026-04-19
 tag: company building, future of work
 image: /images/andoposter2.png
 ---
-## A first look into Ando
-Sara Du and Ando: AI-native Slack 
-
-
+![Team Picture](/images/teampic.jpg)
+![Ben Lang Slack](/images/Ben-Lang.png)
 
 It's Friday night in San Francisco, and engineers are leaving parties early to work with their AI agents. Call an agent over the phone, and lifelike voices respond. On custom extra-long curved monitors, six agents run across different terminal windows, all in view. San Francisco is a boomtown, a place where the future announces itself first as restlessness and an anxiety of moving too slowly.
 
@@ -134,7 +132,7 @@ It is clear to me that their competitive advantage is how much fun they are havi
 Sara knows it is still early. "It’s humbling to study architects' careers, because you usually don’t get any recognition during the decades you're building it.” She tells me as we walk around the  Transamerica Pyramid. “People are annoyed by the construction and the scaffolding. But then when it’s done they post it all over Instagram and forget the journey there.”
 But I don’t doubt she’ll keep building anyway. Even when the work ahead is long and the scaffolding is ugly, she holds the image of the monument in her mind.
 
-If you liked this piece and recognized yourself in it, Ando is hiring. Alpha customers are intensely using the product. DM Sara on here or here and let her know you’re coming from this piece.
+If you liked this piece and recognized yourself in it, Ando is hiring. Alpha customers are intensely using the product. DM Sara on [here](https://x.com/saradu) or [here](https://www.linkedin.com/in/saradu/) and let her know you’re coming from this piece.
 
-I write independent field studies of ambitious early stage companies from a product-centric, deeply personal lens. If you want to chat, you can find me here or email me here. 
+I write independent field studies of ambitious early stage companies from a product-centric, deeply personal lens. If you want to chat, you can find me [here](https://x.com/startingfromnix) or email me [here](startingfromnix@gmail.com). 
 

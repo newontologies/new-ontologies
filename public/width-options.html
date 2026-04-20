@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Column Width Options — New Ontologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400;1,7..72,500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1A0905;
+    --gray-900: #2A1208;
+    --gray-700: #563020;
+    --gray-500: #8A6050;
+    --gray-300: #C8B0A4;
+    --cream: #E3DFCE;
+    --accent: #94B1C8;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter Tight', -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--gray-900);
+    font-family: var(--font-body);
+  }
+
+  /* === SWITCHER === */
+  .switcher {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--black);
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .switcher-label {
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
+
+  .switcher button {
+    background: transparent;
+    border: 1px solid rgba(227,223,206,0.3);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.4em 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .switcher button:hover {
+    border-color: var(--cream);
+  }
+
+  .switcher button.active {
+    background: var(--cream);
+    color: var(--black);
+    border-color: var(--cream);
+  }
+
+  .width-indicator {
+    margin-left: auto;
+    color: var(--cream);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    opacity: 0.6;
+    letter-spacing: 0.02em;
+  }
+
+  /* === ARTICLE === */
+  .article-wrap {
+    margin: 0 auto;
+    padding: 0 2rem;
+    transition: max-width 0.4s ease;
+  }
+
+  .post-header {
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--gray-300);
+    margin-bottom: 2.5rem;
+  }
+
+  .post-header-tag {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-header h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--black);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .post-header-subtitle {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: var(--gray-700);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .post-header-meta {
+    margin-top: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* === PROSE === */
+  .prose {
+    font-family: 'Literata', Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--black);
+    letter-spacing: -0.005em;
+    padding-bottom: 4rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.3rem;
+  }
+
+  .prose > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    float: left;
+    font-size: 4.2rem;
+    line-height: 0.78;
+    padding-right: 0.12em;
+    padding-top: 0.08em;
+    color: var(--black);
+  }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: var(--black);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .prose blockquote {
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    color: var(--black);
+    font-style: italic;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .prose a {
+    color: var(--black);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--gray-300);
+    margin: 2.5rem 0;
+  }
+
+  .prose strong {
+    font-weight: 500;
+    color: var(--gray-900);
+  }
+
+  /* === COLUMN GUIDE === */
+  .col-guide {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+  }
+
+  .col-guide-inner {
+    border-left: 1px dashed rgba(148,177,200,0.3);
+    border-right: 1px dashed rgba(148,177,200,0.3);
+    height: calc(100vh - 60px);
+    transition: width 0.4s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="col-guide">
+  <div class="col-guide-inner" id="colGuide"></div>
+</div>
+
+<div class="switcher">
+  <span class="switcher-label">Column width</span>
+  <button data-width="640">640px · Narrow</button>
+  <button data-width="720" class="active">720px</button>
+  <button data-width="780">780px</button>
+  <button data-width="860">860px · Current</button>
+  <button data-width="940">940px · Wide</button>
+  <span class="width-indicator" id="widthLabel">max-width: 720px</span>
+</div>
+
+<div class="article-wrap" id="articleWrap" style="max-width: 720px;">
+  <header class="post-header">
+    <div class="post-header-tag">company building</div>
+    <h1>New Ontologies of Companies</h1>
+    <p class="post-header-subtitle">How exceptional founders define a new vocabulary to transmit meaning and purpose</p>
+    <div class="post-header-meta">February 15, 2026</div>
+  </header>
+
+  <div class="prose">
+    <p>As the poet Paul Valéry once wrote: the opening line of a poem is like finding a fruit on the ground, a piece of fallen fruit you have never seen before, and the poet's task is to create the tree from which such a fruit would fall.</p>
+
+    <p>Valéry's description of the poet strikes me as similar to the founder's journey. The task for the founder is to create an internal and external frame that implicitly stakes a philosophical claim, from which every aspect of the company grows out of.</p>
+
+    <h2>Defining New Vocabularies</h2>
+
+    <p>I've long been interested in what I call new ontologies of companies. How does a company define a new vocabulary to transmit meaning and purpose? How can a company serve as a doorway into a rich, intellectual world?</p>
+
+    <p>My hope is to write the story of exceptional founders and "share some of early clay" by discussing the product thoughtfully. This is why my essays would differ from a <a href="#">Colossus founder profile</a>, a Mario Gabriele essay — there is much more emphasis on product. The best way I'd describe it is probably a mix between Packy's Deep Dives and Brie Wolfson's Inside Cursor.</p>
+
+    <blockquote>The task for the founder is to create an internal and external frame that implicitly stakes a philosophical claim, from which every aspect of the company grows out of.</blockquote>
+
+    <p>This type of writing requires some combination of product and technical fluency, paired with a desire to tell a founder's story with craft and beauty. For this reason, I spent multiple hours in person with Sara, the wider Ando team, the product, and Ando customers and investors.</p>
+
+    <hr>
+
+    <p>The texture of a company reveals itself in the details — the language of the interface, the rhythm of the onboarding, the way error states are handled. These small decisions accumulate into something that feels coherent, or doesn't. The best founders understand this intuitively: that every surface is a teaching moment, every interaction an opportunity to reinforce the world they are building.</p>
+
+    <p>When you spend time inside a product built by such a founder, you begin to feel the ontology at work. The vocabulary isn't arbitrary. It's load-bearing. Each term carries the weight of a decision about what matters and what doesn't, about which mental models to privilege and which to discard.</p>
+
+    <h2>The Shape of the Product</h2>
+
+    <p>What makes Ando different is not any single feature but the cumulative effect of hundreds of small decisions that all point in the same direction. The onboarding doesn't just collect information — it teaches you how to think about your finances. The dashboard doesn't just display numbers — it tells a story about where your money lives and where it's going.</p>
+
+    <p>Sara describes this as "building the world inside the product." Every label, every transition, every empty state is an opportunity to reinforce the mental model. When you open Ando for the first time, you're not just learning a new app — you're learning a new way of seeing your relationship with money.</p>
+
+    <p>This is what I mean by ontology. The company doesn't just sell a product. It proposes a way of understanding the world. And if the ontology is coherent — if every surface reinforces the same set of ideas — then the product becomes something more than the sum of its features. It becomes a worldview you can inhabit.</p>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.switcher button');
+  const articleWrap = document.getElementById('articleWrap');
+  const widthLabel = document.getElementById('widthLabel');
+  const colGuide = document.getElementById('colGuide');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const w = btn.dataset.width;
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      articleWrap.style.maxWidth = w + 'px';
+      colGuide.style.width = w + 'px';
+      widthLabel.textContent = 'max-width: ' + w + 'px';
+    });
+  });
+
+  // Init guide
+  colGuide.style.width = '720px';
+</script>
+
+</body>
+</html>

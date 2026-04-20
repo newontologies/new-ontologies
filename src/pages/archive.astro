@@ -156,13 +156,10 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
   .archive-item-tag {
     font-size: 0.6rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 0.2em 0.5em;
-    border-radius: 2px;
     white-space: nowrap;
     align-self: center;
   }
@@ -176,8 +173,9 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
     .archive-item-link {
       grid-template-columns: 48px 1fr;
       grid-template-rows: auto auto;
+      gap: 0.1rem 0.75rem;
     }
     .archive-item-sub { display: none; }
-    .archive-item-tag { grid-column: 2; }
+    .archive-item-tag { grid-column: 2; font-size: 0.58rem; }
   }
 </style>
