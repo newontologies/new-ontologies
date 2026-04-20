@@ -4,7 +4,7 @@ title: "New Ontologies: Ando"
 subtitle: "Inside Ando"
 date: 2026-02-15
 tag: company building, future of work
-image: /images/andoposter2.jpg
+image: /images/andoposter2.png
 ---
 ## A first look into Ando
 Sara Du and Ando: AI-native Slack 
