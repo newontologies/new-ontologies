@@ -272,6 +272,7 @@ body {
   height: 340px;
   overflow: hidden;
   position: relative;
+  background: var(--black);
 }
 
 .feat-img::after {
@@ -360,7 +361,8 @@ body {
 
 .thumb-img {
   width: 90px;
-  aspect-ratio: 4/3;
+  height: 68px;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
@@ -762,7 +764,7 @@ main {
 
   .thumb-item { grid-template-columns: 72px 1fr; gap: 0.85rem; align-items: center; }
   .thumb-meta { display: none; }
-  .thumb-img { height: 72px; }
+  .thumb-img { width: 72px; height: 54px; }
   .post-tag { font-size: 0.58rem; padding: 0.1em 0.4em; border: none; color: var(--accent); }
 
   .container {
