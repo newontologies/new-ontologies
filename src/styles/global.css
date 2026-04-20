@@ -272,7 +272,6 @@ body {
   height: 340px;
   overflow: hidden;
   position: relative;
-  background: var(--black);
 }
 
 .feat-img::after {
