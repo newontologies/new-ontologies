@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: "New Ontologies: Ando"
 subtitle: "Inside Ando"
-date: 2026-02-15
+date: 2026-04-19
 tag: company building, future of work
 image: /images/andoposter2.png
 ---
