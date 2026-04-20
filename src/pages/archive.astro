@@ -25,7 +25,9 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
     {years.map(year => (
       <div class="archive-year-group">
-        <span class="archive-year">{year}</span>
+        <div class="archive-year-row">
+          <span class="archive-year">{year}</span>
+        </div>
         <ul class="archive-list">
           {byYear[year].map(post => {
             const date = new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -84,10 +86,13 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
   }
 
   .archive-year-group {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 0;
     border-bottom: 1px solid var(--border-color);
+  }
+
+  .archive-year-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    padding: 1.5rem 0 0;
   }
 
   .archive-year {
@@ -96,7 +101,6 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--gray-400);
-    padding: 1.75rem 0 0;
   }
 
   .archive-list {
@@ -113,7 +117,7 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
   .archive-item-link {
     display: grid;
-    grid-template-columns: 56px 1fr auto auto;
+    grid-template-columns: 64px 1fr auto auto;
     gap: 0 1.25rem;
     align-items: baseline;
     padding: 1.1rem 0;
@@ -167,11 +171,10 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
   @media (max-width: 740px) {
     .archive-page { padding: 0 1.25rem 3rem; }
     .archive-header { padding: 2rem 0 1.5rem; }
-    .archive-year-group { grid-template-columns: 1fr; }
-    .archive-year { padding: 1.25rem 0 0.25rem; border-top: 1px solid var(--border-color); }
+    .archive-year-row { grid-template-columns: 52px 1fr; padding: 1.25rem 0 0; }
     .archive-year-group { border-bottom: none; }
     .archive-item-link {
-      grid-template-columns: 48px 1fr;
+      grid-template-columns: 52px 1fr;
       grid-template-rows: auto auto;
       gap: 0.1rem 0.75rem;
     }
