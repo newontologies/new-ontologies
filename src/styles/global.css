@@ -659,6 +659,21 @@ main {
   margin-top: 0.25rem;
 }
 
+.prose figure {
+  margin: 0.5rem 0;
+}
+
+.prose figure img {
+  margin: 0;
+}
+
+.prose figcaption {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 0.2rem;
+  text-align: center;
+}
+
 .prose hr {
   border: none;
   margin: 3rem auto;

@@ -13,7 +13,12 @@ It's Friday night in San Francisco, and engineers are leaving parties early to w
 
 Sara and the Ando team are building for this emerging frontier of work, a new messaging platform enabling agents to work alongside humans as true teammates, not bots. Instead of retrofitting onto old chat paradigms, they rebuilt messaging designed around agents from the very start.
 
-![Ben Lang Slack](/images/Ben-Lang.png)
+<figure>
+<img src="/images/Ben-Lang.png" alt="Ben Lang Slack" />
+<figcaption>latent demand for new work messaging</figcaption>
+</figure>
+
+
 Ando has been quiet since inception. No funding announcement, no publicly accessible product, no launch party. It feels very David and Goliath — a small crew of obsessive builders going up against Slack and Microsoft Teams, who have dominated the space for over a decade. 
 
 When I first heard about the concept, the vision seemed intractably difficult. Replacing products of sheer ubiquity is its own challenge. Most of us have spent our entire professional lives inside Slack or Teams. As I write this, you might already hear the anxiety-inducing rattle-knock sound, a phantom message in your head. The other prevailing narrative is that foundation models will absorb everything and reduce applications to thin wrappers. 
@@ -35,14 +40,16 @@ Ando is her second company. She founded her first, Alloy Automation, when she wa
 
 "And now?" I asked her.
 
-"I realized there are other things that motivate me more, like building software that people touch and feel every day."
+>"I realized there are other things that motivate me more, like building software that people touch and feel every day."
 
 Sara grew up in Georgia to non-entrepreneurial parents, a system engineer and hospital worker. Their lives followed a steady procession from graduate school to a settled life in the suburbs two hours north of Atlanta. Far enough that you could watch the moon rise over the pines, a gleaming dome of light, and see nothing else for miles. She spent a lot of time alone.
 
 Though the quietness was peaceful, the monotony was unbearable. A safe life could only end in disappointment, she thought. A risky one could end in failure, but it could also be the only kind of life worth living. When she taught herself to code and started posting projects online, the internet became the first place that felt full of possibility. Friends from Twitter convinced her to buy a one-way ticket for SF, where she couchsurfed through hacker houses scattered across farflung parts of the city. RX Bars constituted entire meals because the kitchens were filthy, and she didn't know how to cook. Like any frugal student she meticulously tracked her Uber Share rides and meals on a spreadsheet, capturing expenses down to the dollar. 
 
 "I still have that spreadsheet," she tells me. "I look at it every year to remind myself I was making a big deal out of spending a few hundred dollars in a few months."
-![image of spreadsheet](/images/budget.png)
+
+<img src="/images/budget.png" alt="image of spreadsheet" style="width: 60%;" />
+
 She lasted a year at Harvard before the inevitable pull back to San Francisco. But she wouldn't recommend skipping college altogether. Freshman year was "valuable to get properly socialized."
 
 California has always been a gold rush town. “A place in which a boom mentality and a sense of Chekhovian loss meet in uneasy suspension,” Joan Didion wrote of the state in her essay collection Slouching Towards Bethlehem in the 1960s, “Things had better work out here, because here, beneath that immense bleached sky, is where we run out of continent.” 
@@ -53,14 +60,15 @@ San Francisco was the antithesis of Boston's ivory tower intellectualism. It did
 
 The decision to start a new company last year came in the spirit of truth seeking. "I willed myself into being good at things that I'm just naturally not great at," she reflects in hindsight. “Good and great are so different.” She wanted to re-orient herself toward what she realized she was naturally skilled at, and called it a founder’s duty to match herself to the right market and problem where she could lead her team to massive success.
 
-At Alloy, she had been playing a game where she didn't feel she had as many "cheat codes." Though by background an engineer, she eventually discovered her latent talent for design and marketing. She describes design as craft that goes beyond visual aesthetics, into the amorphous and hard-to-measure feel of using a product, from the naming of features and cadence of notifications, to spending hours inside of the data model. Design at the human layer matters most when the company you're building has to be adopted and loved by consumers. 
+At Alloy, she had been playing a game where she didn't feel she had as many "cheat codes." Though by background an engineer, she eventually discovered her latent talent for design and marketing. When she says design, she means craft that goes beyond visual aesthetics, into the amorphous and hard-to-measure feel of using a product, from the naming of features and cadence of notifications, to spending hours inside of the data model. Design at the human layer matters most when the company you're building has to be adopted and loved by consumers. 
 
-Her story reminded me of a Greek term I like, <i>techne</i>, which means <i>craft grounded in practice</i>. A founder builds a particular shape of company out of their techne, meaning the specific skills and obsessions they bring to the work. 
-"Agency is often a result of system design," Sofia Dolfe, an early investor in Ando from Index Ventures, tells me. Fusing broader cultural and design references with product sense can set the foundation for a new social contract between humans and agents.
+Her story reminded me of a Greek term I like, <i>techne</i>, which means <i>craft grounded in practice</i>. A founder builds a particular shape of company out of their techne, all their experiences, personal craft and taste that they bring to the work.
 
-Spend time with Sara and you'll pick up that she is constitutionally unable to care less. Sweating the small details is a personal standard that shows up everywhere, even beyond the product. Over the weeks, sitting on the togo couch in the corner, I watched the mauve limewash go up and the wood panelling brought in. She was very opinionated that the office design should be calm and studio-like to inspire creativity.
+"Agency is often a result of system design," Sofia Dolfe, an early investor in Ando from Index Ventures, tells me. If Ando is the first piece of software a human touches when they wake up in the morning, it can set the foundation for a new social contract between humans and agents. In this specific domain, it is necessary to have a founder who is cognizant of how designing a piece of digital architecture will deeply affect people's experiences.
+
+Spend time with Sara and you'll pick up that she is constitutionally <i>unable to care less</i>. Sweating the small details is a personal standard that shows up everywhere, even beyond the product. Over the weeks, sitting on the togo couch in the corner, I watched the mauve limewash go up and the wood panelling brought in. She was very opinionated that the office design should be calm and studio-like to inspire creativity.
 ![lamp](/images/lamp.jpg)
-The same instinct shows up in how she runs the team. For example, in her free time she built an internal tool that gives everyone visibility into each other’s prompts and model traces. At most companies, how you talk to an AI is private, a little embarrassing even, the way search history is embarrassing. At Ando, prompting is a craft that you have a responsibility to help your colleagues get better at. All of it boils down to a central kernel of care. The texture of how people work together, down to the sentences they type into a model, is something a company can shape purposefully.
+The same instinct shows up in how she runs and hires the team. In her free time she built an internal tool that gives everyone visibility into each other’s prompts and model traces. At most companies, how you talk to an AI is private, a little embarrassing even, the way search history is embarrassing. At Ando, prompting is a craft that you have a responsibility to help your colleagues get better at. All of it boils down to a central kernel of care. The texture of how people work together, down to the sentences they type into a model, is something a company can shape purposefully.
 
 ## What does Ando do?
 ![Ryan in front of window](/images/ryan.jpg)
@@ -91,7 +99,7 @@ Alex dreams about what the future might look like living with agents. A proactiv
 
 In 1945, before the rise of the personal computer, Vannevar Bush wrote a seminal essay, [As We May Think](https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/), where he described the human race standing on the precipice of an <i>enormous mass of the common record</i> — a rapidly growing archive of books, scientific papers, technical reports, and photographs. He imagined an entirely new profession would emerge, what he called a trailblazer, who would roam and establish “useful trails” between items.
 
-It was remarkably prescient about the internet age. Our current common record has exploded into email, Slack, Google Docs, Notion pages, tickets, dashboards, and the open web. We are still searching for ways to navigate through an immense trove of context.
+It was remarkably prescient. Our current common record has exploded into email, Slack, Google Docs, Notion pages, tickets, dashboards, and the open web. We are still searching for ways to navigate through an immense trove of context.
 
 Ando is working on one version of that problem, sitting at the intersection of engineering and linguistics. How do you make <i>chatter</i>, the raw unstructured conversations people have at work, useful to an agent? Making sense of that mess is where the team spends its product energy.
 
@@ -101,47 +109,55 @@ Chatter resists easy parsing. Time horizons on which organizations tend to opera
 
 Jordan, an engineer on the team, tells me that agents are treated as “first class citizens,” indistinguishable from other coworkers. Ando’s product primitives allow agents to traverse context seamlessly and take the same actions humans can.
 
-One way they do this is through a heavy upfront lift on pre-labelling messages. They compare it to Borges's Library of Babel — a universe containing every possible book, most of them gibberish, where accurate search is lossy and futile. The presence of a taxonomy or library catalog helps an agent find its way through.
+One way they do this is through a heavy upfront lift on pre-labelling messages. They compare it to Borges's <i>Library of Babel</i> — a universe containing every possible book, most of them gibberish, where accurate search is lossy and futile. The presence of a taxonomy or library catalog helps an agent find its way through.
 
-The team will underplay it if you ask, but this was genuinely difficult to get right. Individual message retrieval failed early on. Oliver, a product contributor at Ando, tells me about poring over linguistics research until they found the right conceptual frame. That concept became the foundation of custom conversational units. An agent now groups incoming messages into bundles and annotates them with specific labels, which makes retrieval significantly more accurate.
+The team will underplay it if you ask, but this was genuinely difficult to get right. 
+
+Individual message retrieval failed early on. Oliver, a product contributor at Ando, tells me about poring over computational linguistics research and papers on discourse parsing until they found the right conceptual frame. That concept became the foundation of custom "conversational units." An agent now groups incoming messages into bundles and annotates them with specific labels, which makes retrieval significantly more accurate.
 
 ## The bpm of human conversation
+Most of us spend more waking hours inside a messaging platform than inside any single room. The same way architecture shapes how we live, software shapes how we work and derive meaning. 
 
-The other goal they progress toward is making work communications <i>feel different</i> - less notification hell, more calm and groundededness daily.
+The other north star beyond agent functionality is making work communications <i>feel different</i> - less notification hell, more calm and groundededness daily. 
 
-Most of us spend more waking hours inside a messaging platform than inside any single room. The same way architecture shapes how we live, software shapes how we work and derive meaning. It is fitting that Ando is an homage to the Japanese architect Tadao Ando, [known](https://www.wallpaper.com/architecture/tadao-ando) for his mastery of <i>Ma</i>, the Japanese concept of empty, negative space. 
+Ando is an homage to the Japanese architect Tadao Ando, [known](https://www.wallpaper.com/architecture/tadao-ando) for his mastery of <i>Ma</i>, the Japanese concept of empty, negative space. Inspired by his spiritual chapels and public buildings, the company adopted <i>silence as a design value</i>. One example: instead of notifying users for every single message, they debate how best to collapse notifications so a user feels less at the whim of everyone else in the conversation stack.
 
-Inspired by his spiritual chapels and public buildings, the company adopted <i>silence as a design value</i>. One example: instead of notifying users for every single message, they debate how best to collapse notifications so a user feels less at the whim of everyone else in the conversation stack.
+The same principle is applied to designing agent language and conversation. One concept in conversations I overheard frequently was the "bpm of human conversation,” the way meaning is shaped by text length, word choice, cadence, and interchange between participants. If an agent interjects at the wrong moment or in the wrong register, it is immediately unpleasant. After all, in a chat interface where you never see someone's face, words are the entire basis of understanding and experience.
 
-The same thoughtfulness is applied to designing agent language and conversation. The Ando team thinks carefully about the "bpm of human conversation,” the way meaning is shaped by text length, word choice, cadence, and interchange between participants. If an agent interjects at the wrong moment or in the wrong register, it is immediately unpleasant. After all, in a chat interface where you never see someone's face, words are the entire basis of understanding and experience.
+I enjoy the fact that Hemingway is one of the Ando team’s internal references for how an agent's output should be read - recognizable for his calm, direct sentences. Ryan Haraki, a founding engineer at Ando, calls this compression and precision, or "endeavoring to say more with fewer words."
 
-Hemingway, the American novelist, is one of the Ando team’s internal references for how an agent's output should be read. His style is recognizable for its calm, direct sentences. Ryan Haraki, a founding engineer at Ando, calls this compression and precision, or "endeavoring to say more with fewer words."
+But the team maintains that eventually agents will have to adapt to individual preferences for language. Some readers prefer Hemingway; others prefer Marquez. The question the Ando team is currently trying to answer is how to make that experience feel tasteful to the specific human receiving it.
 
-Eventually, agents will have to adapt to individual preferences for language. Some readers prefer Hemingway; others prefer Marquez. The question the Ando team is trying to answer is how to make that experience feel tasteful to the specific human receiving it.
-
+![team on couch](/images/teamcouch.jpg)
 What is it like to be on the team building all this? 
 
 More playful than you would expect from people building enterprise communication software. 
-![team on couch](/images/teamcouch.jpg)
+
 One member joined as a “cracked anon designer” and worked with the team for months before doing a face reveal. Through Jordan, I learned some lingo to add to my dictionary. “Putting the fries in the bag” meant “stop talking and just ship.” One day I walked into the office to find the engineers tinkering with a receipt printer, trying to spit out physical tickets for the team. It broke, and printed a mile-long receipt containing the entire codebase. Scroll far enough into Sara’s pristine LinkedIn, and you’ll find her #1 endorsed skill is ‘memes.’ 
 
 The lightness of ego sits next to the seriousness of the work. Customers describe the team as “Buddhist-like” and “zen,” and in the same sentence talk about the trust built by “extreme velocity.”
 
 Their real competitive advantage might be how much fun they are having. 
-![zest](/images/zest.jpg)
+
 If they took themselves too seriously, they would just end up building Teams again. A mixture of fastidiousness and romanticism gives the team the boldness to rebuild work communication from the ground up. 
 
-Sara knows it is still early. "It’s humbling to study architects' careers, because you usually don’t get any recognition during the decades you're building it.” She tells me as we walk around the  Transamerica Pyramid. “People are annoyed by the construction and the scaffolding. But then when it’s done they post it all over Instagram and forget the journey there.”
+![zest](/images/zest.jpg)
 
-I don’t doubt she’ll keep building anyway, even when the work ahead is long and the scaffolding is ugly. She holds the image of the monument in her mind.
+Sara knows it is still early and doesn't have all the answers. "It’s humbling to study architects' careers, because you usually don’t get any recognition during the decades you're building it.” She tells me as we walk around the Transamerica Pyramid. “People are annoyed by the construction and the scaffolding. But then when it’s done they post it all over Instagram and forget the journey there.”
+
+A space or building feels alive when it is shaped by small intentional patterns and decisions compounded over time. Like architecture, Ando requires sustained patience and investment in things that have no early measurable ROI. I think Sara and the Ando team will keep building toward something that lasts, even when the work ahead is long and the scaffolding is ugly. They hold the image of the monument in their minds. 
+
 ![transamerica](/images/transamerica.jpg)
 ## contact
 If you liked this piece and recognized yourself in it, Ando is hiring. Alpha customers are intensely using the product. DM Sara on [here](https://x.com/saradu) or [here](https://www.linkedin.com/in/saradu/) and let her know you’re coming from this piece.
 
-![screenshot](/images/screenshot.png)
+<img src="/images/screenshot.png" alt="screenshot" style="width: 40%;" />
 
 I write field studies of early-stage companies. Product and idea-led, but personal in voice. If you want to chat, you can find me [here](https://x.com/startingfromnix) or email me [here](startingfromnix@gmail.com). 
 
-![saranicole](/images/saranicole.jpg)
-<i>see Sara and I in the midst of a long conversation about linguistics</i>
+<figure>
+<img src="/images/saranicole.jpg" alt="saranicole" />
+<figcaption>see Sara and I roaming around the transamerica pyramid and chatting about linguistics</figcaption>
+</figure>
 
+All photos by [JC photography](https://jameschongphotography.mypixieset.com/about/)
