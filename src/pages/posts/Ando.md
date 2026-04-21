@@ -11,10 +11,9 @@ It's Friday night in San Francisco, and engineers are leaving parties early to w
 
 "The best human coworkers surprise you," Sara Du, the CEO of Ando, tells me. “They're proactive, they stew on things overnight and send you interesting thoughts in the morning. Why can’t agents be like that too?”
 
-Sara and the Ando team are building for this emerging frontier of work, a new messaging platform enabling agents to work alongside humans as true teammates, not bots. Instead of retrofitting onto old chat paradigms, they rebuilt messaging designed around agents from scratch.
+Sara and the Ando team are building for this emerging frontier of work, a new messaging platform enabling agents to work alongside humans as true teammates, not bots. Instead of retrofitting onto old chat paradigms, they rebuilt messaging designed around agents from the very start.
 
 ![Ben Lang Slack](/images/Ben-Lang.png)
-
 Ando has been quiet since inception. No funding announcement, no publicly accessible product, no launch party. It feels very David and Goliath — a small crew of obsessive builders going up against Slack and Microsoft Teams, who have dominated the space for over a decade. 
 
 When I first heard about the concept, the vision seemed intractably difficult. Replacing products of sheer ubiquity is its own challenge. Most of us have spent our entire professional lives inside Slack or Teams. As I write this, you might already hear the anxiety-inducing rattle-knock sound, a phantom message in your head. The other prevailing narrative is that foundation models will absorb everything and reduce applications to thin wrappers. 
@@ -44,20 +43,19 @@ Though the quietness was peaceful, the monotony was unbearable. A safe life coul
 
 "I still have that spreadsheet," she tells me. "I look at it every year to remind myself I was making a big deal out of spending a few hundred dollars in a few months."
 ![image of spreadsheet](/images/budget.png)
-
 She lasted a year at Harvard before the inevitable pull back to San Francisco. But she wouldn't recommend skipping college altogether. Freshman year was "valuable to get properly socialized."
 
 California has always been a gold rush town. “A place in which a boom mentality and a sense of Chekhovian loss meet in uneasy suspension,” Joan Didion wrote of the state in her essay collection Slouching Towards Bethlehem in the 1960s, “Things had better work out here, because here, beneath that immense bleached sky, is where we run out of continent.” 
 
 You’d have to succeed here, for there was no further West to go. 
 
-San Francisco was the antithesis of Boston's ivory tower intellectualism. It "didn't have any rules" in comparison. It was here, somewhere between SoMa and Mission Bay, that she started Alloy Automation, an API integration platform for enterprises. The company raised $27M from a16z, Bain, and Shopify and rode the ecommerce boom of 2020.
+San Francisco was the antithesis of Boston's ivory tower intellectualism. It didn't have any rules in comparison. It was here, somewhere between SoMa and Mission Bay, that she started Alloy Automation, an API integration platform for enterprises. The company raised $27M from a16z, Bain, and Shopify and rode the ecommerce boom of 2020.
 
 The decision to start a new company last year came in the spirit of truth seeking. "I willed myself into being good at things that I'm just naturally not great at," she reflects in hindsight. “Good and great are so different.” She wanted to re-orient herself toward what she realized she was naturally skilled at, and called it a founder’s duty to match herself to the right market and problem where she could lead her team to massive success.
 
-At Alloy, she had been playing a game where she didn't feel she had as many "cheat codes." Though by background an engineer, she eventually discovered her latent talent for design and marketing. She describes design as craft that goes beyond visual aesthetics, into the amorphous and hard-to-measure feel of using a product, from the naming of features and cadence of notifications, to spending hours inside of the data model. This kind of design matters most when the company you're building has to be adopted and loved by consumers. 
+At Alloy, she had been playing a game where she didn't feel she had as many "cheat codes." Though by background an engineer, she eventually discovered her latent talent for design and marketing. She describes design as craft that goes beyond visual aesthetics, into the amorphous and hard-to-measure feel of using a product, from the naming of features and cadence of notifications, to spending hours inside of the data model. Design at the human layer matters most when the company you're building has to be adopted and loved by consumers. 
 
-Her story reminded me of a Greek term I like, techne, which means craft grounded in practice. A founder builds a particular shape of company out of their techne, meaning the specific skills and obsessions they bring to the work. 
+Her story reminded me of a Greek term I like, <i>techne</i>, which means <i>craft grounded in practice</i>. A founder builds a particular shape of company out of their techne, meaning the specific skills and obsessions they bring to the work. 
 "Agency is often a result of system design," Sofia Dolfe, an early investor in Ando from Index Ventures, tells me. Fusing broader cultural and design references with product sense can set the foundation for a new social contract between humans and agents.
 
 Spend time with Sara and you'll pick up that she is constitutionally unable to care less. Sweating the small details is a personal standard that shows up everywhere, even beyond the product. Over the weeks, sitting on the togo couch in the corner, I watched the mauve limewash go up and the wood panelling brought in. She was very opinionated that the office design should be calm and studio-like to inspire creativity.
@@ -109,9 +107,11 @@ The team will underplay it if you ask, but this was genuinely difficult to get r
 
 ## The bpm of human conversation
 
-Most of us spend more waking hours inside a messaging platform than inside any single room. The same way architecture shapes how we live, software shapes how we work and derive meaning. It is fitting that Ando is an homage to the Japanese architect Tadao Ando, [known](https://www.wallpaper.com/architecture/tadao-ando) for his mastery of Ma, the Japanese concept of empty, negative space. 
+The other goal they progress toward is making work communications <i>feel different</i> - less notification hell, more calm and groundededness daily.
 
-Inspired by his spiritual chapels and public buildings, the Ando team adopted <i>silence as a design value</i>. One example: instead of notifying users for every single message, the team debates how best to collapse notifications so a user feels less at the whim of everyone else in the conversation stack.
+Most of us spend more waking hours inside a messaging platform than inside any single room. The same way architecture shapes how we live, software shapes how we work and derive meaning. It is fitting that Ando is an homage to the Japanese architect Tadao Ando, [known](https://www.wallpaper.com/architecture/tadao-ando) for his mastery of <i>Ma</i>, the Japanese concept of empty, negative space. 
+
+Inspired by his spiritual chapels and public buildings, the company adopted <i>silence as a design value</i>. One example: instead of notifying users for every single message, they debate how best to collapse notifications so a user feels less at the whim of everyone else in the conversation stack.
 
 The same thoughtfulness is applied to designing agent language and conversation. The Ando team thinks carefully about the "bpm of human conversation,” the way meaning is shaped by text length, word choice, cadence, and interchange between participants. If an agent interjects at the wrong moment or in the wrong register, it is immediately unpleasant. After all, in a chat interface where you never see someone's face, words are the entire basis of understanding and experience.
 
