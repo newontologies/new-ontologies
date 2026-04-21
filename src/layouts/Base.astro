@@ -9,8 +9,9 @@ interface Props {
 
 const { title = 'New Ontologies', description = 'Original research on technology, culture, and the systems that shape how we build, work, and see.', image } = Astro.props;
 const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontologies`;
-const siteUrl = 'https://newontologies.com';
+const siteUrl = 'https://www.new-ontologies.com';
 const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/og-default.png`;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +28,7 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/og-default.png
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:url" content={siteUrl} />
+  <meta property="og:url" content={canonicalUrl} />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
