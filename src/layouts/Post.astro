@@ -9,7 +9,7 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   day: 'numeric',
 });
 ---
-<Base title={frontmatter.title} description={frontmatter.subtitle || frontmatter.title}>
+<Base title={frontmatter.title} description={frontmatter.subtitle || frontmatter.title} image={frontmatter.image}>
   <div class="progress-bar" id="progressBar"></div>
   <div class="container">
     <article>

@@ -4,10 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
-const { title = 'New Ontologies', description = 'Original research on technology, culture, and the systems that shape how we build, work, and see.' } = Astro.props;
+const { title = 'New Ontologies', description = 'Original research on technology, culture, and the systems that shape how we build, work, and see.', image } = Astro.props;
 const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontologies`;
+const siteUrl = 'https://newontologies.com';
+const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/og-default.png`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +20,20 @@ const pageTitle = title === 'New Ontologies' ? title : `${title} — New Ontolog
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="New Ontologies" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={siteUrl} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
 </head>
 <body>
   <header class="site-header">
